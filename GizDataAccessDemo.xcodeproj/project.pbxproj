@@ -7,11 +7,15 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		66BD6D451A695B2F004A0106 /* GizDataAccess.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 66BD6D441A695B2F004A0106 /* GizDataAccess.framework */; };
+		E290A7D11A89DBCB00196002 /* Login.m in Sources */ = {isa = PBXBuildFile; fileRef = E290A7CC1A89DBCB00196002 /* Login.m */; };
+		E290A7D21A89DBCB00196002 /* Login.xib in Resources */ = {isa = PBXBuildFile; fileRef = E290A7CD1A89DBCB00196002 /* Login.xib */; };
+		E290A7D31A89DBCB00196002 /* RegisterUser.m in Sources */ = {isa = PBXBuildFile; fileRef = E290A7CF1A89DBCB00196002 /* RegisterUser.m */; };
+		E290A7D41A89DBCB00196002 /* RegisterUser.xib in Resources */ = {isa = PBXBuildFile; fileRef = E290A7D01A89DBCB00196002 /* RegisterUser.xib */; };
 		EE934C9D1A5278FE00C7F908 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = EE934C9C1A5278FE00C7F908 /* main.m */; };
 		EE934CA01A5278FE00C7F908 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = EE934C9F1A5278FE00C7F908 /* AppDelegate.m */; };
 		EE934CA31A5278FE00C7F908 /* AutoLogin.m in Sources */ = {isa = PBXBuildFile; fileRef = EE934CA21A5278FE00C7F908 /* AutoLogin.m */; };
 		EE934CA81A5278FE00C7F908 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = EE934CA71A5278FE00C7F908 /* Images.xcassets */; };
+		EE934CDA1A527E7300C7F908 /* GizDataAccess.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EE934CD91A527E7300C7F908 /* GizDataAccess.framework */; };
 		EE934CE51A52818E00C7F908 /* AutoLogin.xib in Resources */ = {isa = PBXBuildFile; fileRef = EE934CE41A52818E00C7F908 /* AutoLogin.xib */; };
 		EE986CEF1A5FBE5700B6E03E /* DataManager.m in Sources */ = {isa = PBXBuildFile; fileRef = EE986CED1A5FBE5700B6E03E /* DataManager.m */; };
 		EE986CF01A5FBE5700B6E03E /* DataManager.xib in Resources */ = {isa = PBXBuildFile; fileRef = EE986CEE1A5FBE5700B6E03E /* DataManager.xib */; };
@@ -40,7 +44,12 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		66BD6D441A695B2F004A0106 /* GizDataAccess.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = GizDataAccess.framework; sourceTree = "<group>"; };
+		E290A7CB1A89DBCB00196002 /* Login.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Login.h; sourceTree = "<group>"; };
+		E290A7CC1A89DBCB00196002 /* Login.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Login.m; sourceTree = "<group>"; };
+		E290A7CD1A89DBCB00196002 /* Login.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = Login.xib; sourceTree = "<group>"; };
+		E290A7CE1A89DBCB00196002 /* RegisterUser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RegisterUser.h; sourceTree = "<group>"; };
+		E290A7CF1A89DBCB00196002 /* RegisterUser.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RegisterUser.m; sourceTree = "<group>"; };
+		E290A7D01A89DBCB00196002 /* RegisterUser.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = RegisterUser.xib; sourceTree = "<group>"; };
 		EE934C971A5278FE00C7F908 /* GizDataAccessDemo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = GizDataAccessDemo.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		EE934C9B1A5278FE00C7F908 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		EE934C9C1A5278FE00C7F908 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
@@ -49,6 +58,7 @@
 		EE934CA11A5278FE00C7F908 /* AutoLogin.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AutoLogin.h; sourceTree = "<group>"; };
 		EE934CA21A5278FE00C7F908 /* AutoLogin.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AutoLogin.m; sourceTree = "<group>"; };
 		EE934CA71A5278FE00C7F908 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
+		EE934CD91A527E7300C7F908 /* GizDataAccess.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = GizDataAccess.framework; path = ../../Library/GizDataAccess.framework; sourceTree = "<group>"; };
 		EE934CDB1A527ED000C7F908 /* GizDataAccessDemo.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = GizDataAccessDemo.pch; sourceTree = "<group>"; };
 		EE934CE41A52818E00C7F908 /* AutoLogin.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = AutoLogin.xib; sourceTree = "<group>"; };
 		EE986CEC1A5FBE5700B6E03E /* DataManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DataManager.h; sourceTree = "<group>"; };
@@ -105,7 +115,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				66BD6D451A695B2F004A0106 /* GizDataAccess.framework in Frameworks */,
+				EE934CDA1A527E7300C7F908 /* GizDataAccess.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -146,6 +156,12 @@
 				EE986CF61A5FBE6500B6E03E /* LoadData.h */,
 				EE986CF71A5FBE6500B6E03E /* LoadData.m */,
 				EE986CF81A5FBE6500B6E03E /* LoadData.xib */,
+				E290A7CB1A89DBCB00196002 /* Login.h */,
+				E290A7CC1A89DBCB00196002 /* Login.m */,
+				E290A7CD1A89DBCB00196002 /* Login.xib */,
+				E290A7CE1A89DBCB00196002 /* RegisterUser.h */,
+				E290A7CF1A89DBCB00196002 /* RegisterUser.m */,
+				E290A7D01A89DBCB00196002 /* RegisterUser.xib */,
 				EE934CA71A5278FE00C7F908 /* Images.xcassets */,
 				EE934C9A1A5278FE00C7F908 /* Supporting Files */,
 			);
@@ -165,9 +181,9 @@
 		EE934CD51A527E2E00C7F908 /* utils */ = {
 			isa = PBXGroup;
 			children = (
-				66BD6D441A695B2F004A0106 /* GizDataAccess.framework */,
 				EE986D171A5FD4B900B6E03E /* AFNetworking */,
 				EE986CFB1A5FBEA200B6E03E /* MBProgressHUD */,
+				EE934CD91A527E7300C7F908 /* GizDataAccess.framework */,
 			);
 			path = utils;
 			sourceTree = SOURCE_ROOT;
@@ -302,6 +318,8 @@
 				EE934CA81A5278FE00C7F908 /* Images.xcassets in Resources */,
 				EE986CF01A5FBE5700B6E03E /* DataManager.xib in Resources */,
 				EE986CF51A5FBE5E00B6E03E /* AddData.xib in Resources */,
+				E290A7D21A89DBCB00196002 /* Login.xib in Resources */,
+				E290A7D41A89DBCB00196002 /* RegisterUser.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -317,6 +335,7 @@
 				EE934CA31A5278FE00C7F908 /* AutoLogin.m in Sources */,
 				EE986D4C1A5FD4B900B6E03E /* UIProgressView+AFNetworking.m in Sources */,
 				EE934CA01A5278FE00C7F908 /* AppDelegate.m in Sources */,
+				E290A7D11A89DBCB00196002 /* Login.m in Sources */,
 				EE986D491A5FD4B900B6E03E /* UIAlertView+AFNetworking.m in Sources */,
 				EE986CEF1A5FBE5700B6E03E /* DataManager.m in Sources */,
 				EE986D451A5FD4B900B6E03E /* AFURLResponseSerialization.m in Sources */,
@@ -328,6 +347,7 @@
 				EE986D421A5FD4B900B6E03E /* AFSecurityPolicy.m in Sources */,
 				EE986D3E1A5FD4B900B6E03E /* AFHTTPRequestOperation.m in Sources */,
 				EE986D461A5FD4B900B6E03E /* AFURLSessionManager.m in Sources */,
+				E290A7D31A89DBCB00196002 /* RegisterUser.m in Sources */,
 				EE934C9D1A5278FE00C7F908 /* main.m in Sources */,
 				EE986CF41A5FBE5E00B6E03E /* AddData.m in Sources */,
 				EE986D401A5FD4B900B6E03E /* AFHTTPSessionManager.m in Sources */,
@@ -426,8 +446,6 @@
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					/Volumes/MacData/Projects/SDK/GizDataAccessSDK/GizDataAccessSDK/src/iOS/Library,
-					/Users/rosefish/GizWits/BlueSDK/GizDataAccessSDK/src/iOS/Library,
-					"$(PROJECT_DIR)/utils",
 				);
 				GCC_PREFIX_HEADER = GizDataAccessDemo/GizDataAccessDemo.pch;
 				INFOPLIST_FILE = GizDataAccessDemo/Info.plist;
@@ -444,8 +462,6 @@
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					/Volumes/MacData/Projects/SDK/GizDataAccessSDK/GizDataAccessSDK/src/iOS/Library,
-					/Users/rosefish/GizWits/BlueSDK/GizDataAccessSDK/src/iOS/Library,
-					"$(PROJECT_DIR)/utils",
 				);
 				GCC_PREFIX_HEADER = GizDataAccessDemo/GizDataAccessDemo.pch;
 				INFOPLIST_FILE = GizDataAccessDemo/Info.plist;

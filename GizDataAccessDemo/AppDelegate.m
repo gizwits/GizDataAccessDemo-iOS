@@ -23,7 +23,8 @@
  */
 
 #import "AppDelegate.h"
-#import "AutoLogin.h"
+//#import "AutoLogin.h"
+#import "Login.h"
 #import <GizDataAccess/GizDataAccess.h>
 
 NSString *_token = nil;
@@ -44,7 +45,8 @@ NSArray *_datas = nil;
     self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
     self.window.backgroundColor = [UIColor whiteColor];
 
-    self.navCtrl = [[UINavigationController alloc] initWithRootViewController:[[AutoLogin alloc] init]];
+    self.navCtrl = [[UINavigationController alloc] initWithRootViewController:[[Login alloc] init]];
+//    self.navCtrl = [[UINavigationController alloc] initWithRootViewController:[[AutoLogin alloc] init]];
     self.navCtrl.navigationBar.translucent = NO;
     self.window.rootViewController = self.navCtrl;
     [self.window makeKeyAndVisible];

@@ -40,7 +40,10 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view from its nib.
-    self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"添加数据" style:UIBarButtonItemStylePlain target:self action:@selector(onAddItem)];
+    UIBarButtonItem *leftItem1 = [[UIBarButtonItem alloc] initWithTitle:@"添加数据" style:UIBarButtonItemStylePlain target:self action:@selector(onAddItem)];
+    UIBarButtonItem *leftItem2 = [[UIBarButtonItem alloc] initWithTitle:@"注销" style:UIBarButtonItemStylePlain target:self action:@selector(onLogout)];
+    
+    self.navigationItem.leftBarButtonItems = @[leftItem1, leftItem2];
     self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"设定查询条件" style:UIBarButtonItemStylePlain target:self action:@selector(onLoadData)];
     self.navigationItem.title = @"查询结果";
 }
@@ -66,6 +69,13 @@
     loadDataCtrl = [[LoadData alloc] initWithDelegate:self];
 //    [self.navigationController pushViewController:loadDataCtrl animated:YES];
     [loadDataCtrl show];
+}
+
+- (void)onLogout {
+    [self.navigationController popToRootViewControllerAnimated:YES];
+    
+    //清除登录信息
+    _token = nil;
 }
 
 #pragma mark - table view data source
