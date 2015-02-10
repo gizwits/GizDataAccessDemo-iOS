@@ -8,7 +8,7 @@
 
 #import "RegisterUser.h"
 
-@interface RegisterUser () <GizDataAccessLoginDelegate>
+@interface RegisterUser () <GizDataAccessLoginDelegate, UITextFieldDelegate>
 
 @property (weak, nonatomic) IBOutlet UILabel *textUserName;
 
@@ -55,6 +55,7 @@
             break;
         case kRegisterUserTypePhone:
             self.textUserName.text = @"手机号";
+            self.textPassword.returnKeyType = UIReturnKeyNext;
             break;
         default:
             break;
@@ -117,6 +118,59 @@
         self.btnVerifyCode.enabled = YES;
         [timer invalidate];
     }
+}
+
+- (IBAction)onTap:(id)sender {
+    [self.textUser resignFirstResponder];
+    [self.textPassword resignFirstResponder];
+    [self.textVerifyCode resignFirstResponder];
+}
+
+- (void)textFieldDidBeginEditing:(UITextField *)textField
+{
+    [UIView beginAnimations:nil context:nil];
+    [UIView setAnimationsEnabled:YES];
+    
+    CGRect frame = self.view.frame;
+    if(textField == self.textUser)
+        frame.origin.y = 64;
+    if(textField == self.textPassword)
+        frame.origin.y = 0;
+    if(textField == self.textVerifyCode)
+        frame.origin.y = 0;
+    self.view.frame = frame;
+    
+    [UIView commitAnimations];
+}
+
+- (void)textFieldDidEndEditing:(UITextField *)textField
+{
+    [UIView beginAnimations:nil context:nil];
+    [UIView setAnimationsEnabled:YES];
+    
+    CGRect frame = self.view.frame;
+    frame.origin.y = 64;
+    self.view.frame = frame;
+    
+    [UIView commitAnimations];
+}
+
+- (BOOL)textFieldShouldReturn:(UITextField *)textField
+{
+    if(textField == self.textUser)
+        [self.textPassword becomeFirstResponder];
+    if(textField == self.textPassword)
+    {
+        if(self.type == kRegisterUserTypePhone)
+            [self.textVerifyCode becomeFirstResponder];
+        else
+            [self onRegister:textField];
+    }
+    if(textField == self.textVerifyCode)
+    {
+        [self onRegister:textField];
+    }
+    return YES;
 }
 
 - (void)gizDataAccessDidRegisterUser:(GizDataAccessLogin *)login uid:(NSString *)uid token:(NSString *)token result:(GizDataAccessErrorCode)result message:(NSString *)message

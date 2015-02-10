@@ -11,7 +11,7 @@
 #import "AutoLogin.h"
 #import "RegisterUser.h"
 
-@interface Login () <UIActionSheetDelegate>
+@interface Login () <UIActionSheetDelegate, UITextFieldDelegate>
 
 @property (weak, nonatomic) IBOutlet UITextField *textUser;
 @property (weak, nonatomic) IBOutlet UITextField *textPass;
@@ -78,6 +78,57 @@
     UIActionSheet *actionSheet = [[UIActionSheet alloc] initWithTitle:@"注册方式" delegate:self cancelButtonTitle:@"取消" destructiveButtonTitle:@"普通用户" otherButtonTitles:@"手机用户", @"邮箱用户", nil];
     
     [actionSheet showInView:self.view];
+}
+
+- (IBAction)onTap:(id)sender {
+    [self.textUser resignFirstResponder];
+    [self.textPass resignFirstResponder];
+    [self.textUid resignFirstResponder];
+    [self.textToken resignFirstResponder];
+}
+
+- (void)textFieldDidBeginEditing:(UITextField *)textField
+{
+    [UIView beginAnimations:nil context:nil];
+    [UIView setAnimationsEnabled:YES];
+    
+    CGRect frame = self.view.frame;
+    if(textField == self.textUser)
+        frame.origin.y = 64;
+    if(textField == self.textPass)
+        frame.origin.y = 64;
+    if(textField == self.textUid)
+        frame.origin.y = -40;
+    if(textField == self.textToken)
+        frame.origin.y = -80;
+    self.view.frame = frame;
+    
+    [UIView commitAnimations];
+}
+
+- (void)textFieldDidEndEditing:(UITextField *)textField
+{
+    [UIView beginAnimations:nil context:nil];
+    [UIView setAnimationsEnabled:YES];
+    
+    CGRect frame = self.view.frame;
+    frame.origin.y = 64;
+    self.view.frame = frame;
+    
+    [UIView commitAnimations];
+}
+
+- (BOOL)textFieldShouldReturn:(UITextField *)textField
+{
+    if(textField == self.textUser)
+        [self.textPass becomeFirstResponder];
+    if(textField == self.textPass)
+        [self onLoginNormal:textField];
+    if(textField == self.textUid)
+        [self.textToken becomeFirstResponder];
+    if(textField == self.textToken)
+        [self onLoginThirdAccount:textField];
+    return YES;
 }
 
 - (void)actionSheet:(UIActionSheet *)actionSheet didDismissWithButtonIndex:(NSInteger)buttonIndex

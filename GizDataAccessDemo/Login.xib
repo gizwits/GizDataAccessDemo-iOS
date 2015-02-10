@@ -92,7 +92,10 @@
                         <constraint firstAttribute="height" constant="30" id="W09-Th-bDl"/>
                     </constraints>
                     <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                    <textInputTraits key="textInputTraits"/>
+                    <textInputTraits key="textInputTraits" returnKeyType="next"/>
+                    <connections>
+                        <outlet property="delegate" destination="-1" id="s6G-20-9Sg"/>
+                    </connections>
                 </textField>
                 <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="yFY-bB-TC7">
                     <rect key="frame" x="122" y="96" width="444" height="30"/>
@@ -100,7 +103,10 @@
                         <constraint firstAttribute="height" constant="30" id="lC2-EE-JPA"/>
                     </constraints>
                     <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                    <textInputTraits key="textInputTraits"/>
+                    <textInputTraits key="textInputTraits" returnKeyType="done"/>
+                    <connections>
+                        <outlet property="delegate" destination="-1" id="h1B-ZZ-7qa"/>
+                    </connections>
                 </textField>
                 <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="Y61-PF-xsj">
                     <rect key="frame" x="122" y="262" width="444" height="30"/>
@@ -108,7 +114,10 @@
                         <constraint firstAttribute="height" constant="30" id="NEU-S9-Si1"/>
                     </constraints>
                     <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                    <textInputTraits key="textInputTraits"/>
+                    <textInputTraits key="textInputTraits" returnKeyType="next"/>
+                    <connections>
+                        <outlet property="delegate" destination="-1" id="kFL-dk-4Sh"/>
+                    </connections>
                 </textField>
                 <segmentedControl opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="plain" selectedSegmentIndex="0" translatesAutoresizingMaskIntoConstraints="NO" id="ZlW-uD-CNW">
                     <rect key="frame" x="34" y="216" width="532" height="29"/>
@@ -136,10 +145,14 @@
                 <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="P4F-84-dzx">
                     <rect key="frame" x="122" y="312" width="444" height="30"/>
                     <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                    <textInputTraits key="textInputTraits"/>
+                    <textInputTraits key="textInputTraits" returnKeyType="done"/>
+                    <connections>
+                        <outlet property="delegate" destination="-1" id="9bo-74-6Ua"/>
+                    </connections>
                 </textField>
             </subviews>
             <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+            <gestureRecognizers/>
             <constraints>
                 <constraint firstItem="P4F-84-dzx" firstAttribute="top" secondItem="Y61-PF-xsj" secondAttribute="bottom" constant="20" id="1dT-dm-Pzi"/>
                 <constraint firstAttribute="centerX" secondItem="crT-YD-EN4" secondAttribute="centerX" id="2AS-Q2-8LF"/>
@@ -171,6 +184,14 @@
                 <constraint firstItem="3wd-ES-Lq0" firstAttribute="top" secondItem="P4F-84-dzx" secondAttribute="bottom" constant="21" id="yrG-q4-eT8"/>
                 <constraint firstItem="Y61-PF-xsj" firstAttribute="leading" secondItem="Ru8-mZ-g5R" secondAttribute="trailing" constant="64" id="zpu-Dl-AWZ"/>
             </constraints>
+            <connections>
+                <outletCollection property="gestureRecognizers" destination="uli-Vw-Oeo" appends="YES" id="lj7-bR-Ikz"/>
+            </connections>
         </view>
+        <tapGestureRecognizer id="uli-Vw-Oeo">
+            <connections>
+                <action selector="onTap:" destination="-1" id="dpN-Mi-ulx"/>
+            </connections>
+        </tapGestureRecognizer>
     </objects>
 </document>
