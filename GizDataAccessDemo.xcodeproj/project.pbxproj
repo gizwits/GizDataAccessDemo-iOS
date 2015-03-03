@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		E25F93E11AA5530600AB2AC2 /* GizDataAccess.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E25F93E01AA5530600AB2AC2 /* GizDataAccess.framework */; };
 		E28944661AA41B2F009ADF72 /* ChangePass.m in Sources */ = {isa = PBXBuildFile; fileRef = E28944611AA41B2F009ADF72 /* ChangePass.m */; };
 		E28944671AA41B2F009ADF72 /* ChangePass.xib in Resources */ = {isa = PBXBuildFile; fileRef = E28944621AA41B2F009ADF72 /* ChangePass.xib */; };
 		E28944681AA41B2F009ADF72 /* ChangeUser.m in Sources */ = {isa = PBXBuildFile; fileRef = E28944641AA41B2F009ADF72 /* ChangeUser.m */; };
@@ -19,7 +20,6 @@
 		EE934CA01A5278FE00C7F908 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = EE934C9F1A5278FE00C7F908 /* AppDelegate.m */; };
 		EE934CA31A5278FE00C7F908 /* AutoLogin.m in Sources */ = {isa = PBXBuildFile; fileRef = EE934CA21A5278FE00C7F908 /* AutoLogin.m */; };
 		EE934CA81A5278FE00C7F908 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = EE934CA71A5278FE00C7F908 /* Images.xcassets */; };
-		EE934CDA1A527E7300C7F908 /* GizDataAccess.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EE934CD91A527E7300C7F908 /* GizDataAccess.framework */; };
 		EE934CE51A52818E00C7F908 /* AutoLogin.xib in Resources */ = {isa = PBXBuildFile; fileRef = EE934CE41A52818E00C7F908 /* AutoLogin.xib */; };
 		EE986CEF1A5FBE5700B6E03E /* DataManager.m in Sources */ = {isa = PBXBuildFile; fileRef = EE986CED1A5FBE5700B6E03E /* DataManager.m */; };
 		EE986CF01A5FBE5700B6E03E /* DataManager.xib in Resources */ = {isa = PBXBuildFile; fileRef = EE986CEE1A5FBE5700B6E03E /* DataManager.xib */; };
@@ -48,6 +48,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		E25F93E01AA5530600AB2AC2 /* GizDataAccess.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = GizDataAccess.framework; sourceTree = "<group>"; };
 		E28944601AA41B2F009ADF72 /* ChangePass.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ChangePass.h; sourceTree = "<group>"; };
 		E28944611AA41B2F009ADF72 /* ChangePass.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ChangePass.m; sourceTree = "<group>"; };
 		E28944621AA41B2F009ADF72 /* ChangePass.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ChangePass.xib; sourceTree = "<group>"; };
@@ -68,7 +69,6 @@
 		EE934CA11A5278FE00C7F908 /* AutoLogin.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AutoLogin.h; sourceTree = "<group>"; };
 		EE934CA21A5278FE00C7F908 /* AutoLogin.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AutoLogin.m; sourceTree = "<group>"; };
 		EE934CA71A5278FE00C7F908 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
-		EE934CD91A527E7300C7F908 /* GizDataAccess.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = GizDataAccess.framework; path = ../../Library/GizDataAccess.framework; sourceTree = "<group>"; };
 		EE934CDB1A527ED000C7F908 /* GizDataAccessDemo.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = GizDataAccessDemo.pch; sourceTree = "<group>"; };
 		EE934CE41A52818E00C7F908 /* AutoLogin.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = AutoLogin.xib; sourceTree = "<group>"; };
 		EE986CEC1A5FBE5700B6E03E /* DataManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DataManager.h; sourceTree = "<group>"; };
@@ -125,13 +125,21 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				EE934CDA1A527E7300C7F908 /* GizDataAccess.framework in Frameworks */,
+				E25F93E11AA5530600AB2AC2 /* GizDataAccess.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		E25F93DF1AA5530600AB2AC2 /* GizDataAccess */ = {
+			isa = PBXGroup;
+			children = (
+				E25F93E01AA5530600AB2AC2 /* GizDataAccess.framework */,
+			);
+			path = GizDataAccess;
+			sourceTree = "<group>";
+		};
 		EE934C8E1A5278FE00C7F908 = {
 			isa = PBXGroup;
 			children = (
@@ -197,9 +205,9 @@
 		EE934CD51A527E2E00C7F908 /* utils */ = {
 			isa = PBXGroup;
 			children = (
+				E25F93DF1AA5530600AB2AC2 /* GizDataAccess */,
 				EE986D171A5FD4B900B6E03E /* AFNetworking */,
 				EE986CFB1A5FBEA200B6E03E /* MBProgressHUD */,
-				EE934CD91A527E7300C7F908 /* GizDataAccess.framework */,
 			);
 			path = utils;
 			sourceTree = SOURCE_ROOT;
@@ -466,6 +474,7 @@
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					/Volumes/MacData/Projects/SDK/GizDataAccessSDK/GizDataAccessSDK/src/iOS/Library,
+					"$(PROJECT_DIR)/utils/GizDataAccess",
 				);
 				GCC_PREFIX_HEADER = GizDataAccessDemo/GizDataAccessDemo.pch;
 				INFOPLIST_FILE = GizDataAccessDemo/Info.plist;
@@ -482,6 +491,7 @@
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					/Volumes/MacData/Projects/SDK/GizDataAccessSDK/GizDataAccessSDK/src/iOS/Library,
+					"$(PROJECT_DIR)/utils/GizDataAccess",
 				);
 				GCC_PREFIX_HEADER = GizDataAccessDemo/GizDataAccessDemo.pch;
 				INFOPLIST_FILE = GizDataAccessDemo/Info.plist;
