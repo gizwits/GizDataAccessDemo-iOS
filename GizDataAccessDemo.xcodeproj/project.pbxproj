@@ -7,7 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		E25F93E11AA5530600AB2AC2 /* GizDataAccess.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E25F93E01AA5530600AB2AC2 /* GizDataAccess.framework */; };
+		E25F93EB1AA557DD00AB2AC2 /* GizDataAccess.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E25F93EA1AA557DD00AB2AC2 /* GizDataAccess.framework */; };
 		E28944661AA41B2F009ADF72 /* ChangePass.m in Sources */ = {isa = PBXBuildFile; fileRef = E28944611AA41B2F009ADF72 /* ChangePass.m */; };
 		E28944671AA41B2F009ADF72 /* ChangePass.xib in Resources */ = {isa = PBXBuildFile; fileRef = E28944621AA41B2F009ADF72 /* ChangePass.xib */; };
 		E28944681AA41B2F009ADF72 /* ChangeUser.m in Sources */ = {isa = PBXBuildFile; fileRef = E28944641AA41B2F009ADF72 /* ChangeUser.m */; };
@@ -48,7 +48,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		E25F93E01AA5530600AB2AC2 /* GizDataAccess.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = GizDataAccess.framework; sourceTree = "<group>"; };
+		E25F93EA1AA557DD00AB2AC2 /* GizDataAccess.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = GizDataAccess.framework; sourceTree = "<group>"; };
 		E28944601AA41B2F009ADF72 /* ChangePass.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ChangePass.h; sourceTree = "<group>"; };
 		E28944611AA41B2F009ADF72 /* ChangePass.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ChangePass.m; sourceTree = "<group>"; };
 		E28944621AA41B2F009ADF72 /* ChangePass.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ChangePass.xib; sourceTree = "<group>"; };
@@ -125,17 +125,17 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				E25F93E11AA5530600AB2AC2 /* GizDataAccess.framework in Frameworks */,
+				E25F93EB1AA557DD00AB2AC2 /* GizDataAccess.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		E25F93DF1AA5530600AB2AC2 /* GizDataAccess */ = {
+		E25F93E91AA557DD00AB2AC2 /* GizDataAccess */ = {
 			isa = PBXGroup;
 			children = (
-				E25F93E01AA5530600AB2AC2 /* GizDataAccess.framework */,
+				E25F93EA1AA557DD00AB2AC2 /* GizDataAccess.framework */,
 			);
 			path = GizDataAccess;
 			sourceTree = "<group>";
@@ -205,9 +205,9 @@
 		EE934CD51A527E2E00C7F908 /* utils */ = {
 			isa = PBXGroup;
 			children = (
-				E25F93DF1AA5530600AB2AC2 /* GizDataAccess */,
 				EE986D171A5FD4B900B6E03E /* AFNetworking */,
 				EE986CFB1A5FBEA200B6E03E /* MBProgressHUD */,
+				E25F93E91AA557DD00AB2AC2 /* GizDataAccess */,
 			);
 			path = utils;
 			sourceTree = SOURCE_ROOT;
