@@ -101,7 +101,7 @@
     [UIView commitAnimations];
 }
 
-- (void)gizDataAccessDidSaveData:(GizDataAccessSource *)source result:(GizDataAccessErrorCode)result message:(NSString *)message
+- (void)gizDataAccess:(GizDataAccessSource *)source didSaveData:(GizDataAccessErrorCode)result message:(NSString *)message
 {
     [GIZAppDelegate.hud hide:YES];
     NSLog(@"Save data result: %@ message: %@", @(result), message);

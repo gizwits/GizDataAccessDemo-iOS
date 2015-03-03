@@ -7,6 +7,10 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		E28944661AA41B2F009ADF72 /* ChangePass.m in Sources */ = {isa = PBXBuildFile; fileRef = E28944611AA41B2F009ADF72 /* ChangePass.m */; };
+		E28944671AA41B2F009ADF72 /* ChangePass.xib in Resources */ = {isa = PBXBuildFile; fileRef = E28944621AA41B2F009ADF72 /* ChangePass.xib */; };
+		E28944681AA41B2F009ADF72 /* ChangeUser.m in Sources */ = {isa = PBXBuildFile; fileRef = E28944641AA41B2F009ADF72 /* ChangeUser.m */; };
+		E28944691AA41B2F009ADF72 /* ChangeUser.xib in Resources */ = {isa = PBXBuildFile; fileRef = E28944651AA41B2F009ADF72 /* ChangeUser.xib */; };
 		E290A7D11A89DBCB00196002 /* Login.m in Sources */ = {isa = PBXBuildFile; fileRef = E290A7CC1A89DBCB00196002 /* Login.m */; };
 		E290A7D21A89DBCB00196002 /* Login.xib in Resources */ = {isa = PBXBuildFile; fileRef = E290A7CD1A89DBCB00196002 /* Login.xib */; };
 		E290A7D31A89DBCB00196002 /* RegisterUser.m in Sources */ = {isa = PBXBuildFile; fileRef = E290A7CF1A89DBCB00196002 /* RegisterUser.m */; };
@@ -44,6 +48,12 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		E28944601AA41B2F009ADF72 /* ChangePass.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ChangePass.h; sourceTree = "<group>"; };
+		E28944611AA41B2F009ADF72 /* ChangePass.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ChangePass.m; sourceTree = "<group>"; };
+		E28944621AA41B2F009ADF72 /* ChangePass.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ChangePass.xib; sourceTree = "<group>"; };
+		E28944631AA41B2F009ADF72 /* ChangeUser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ChangeUser.h; sourceTree = "<group>"; };
+		E28944641AA41B2F009ADF72 /* ChangeUser.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ChangeUser.m; sourceTree = "<group>"; };
+		E28944651AA41B2F009ADF72 /* ChangeUser.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ChangeUser.xib; sourceTree = "<group>"; };
 		E290A7CB1A89DBCB00196002 /* Login.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Login.h; sourceTree = "<group>"; };
 		E290A7CC1A89DBCB00196002 /* Login.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Login.m; sourceTree = "<group>"; };
 		E290A7CD1A89DBCB00196002 /* Login.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = Login.xib; sourceTree = "<group>"; };
@@ -54,7 +64,7 @@
 		EE934C9B1A5278FE00C7F908 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		EE934C9C1A5278FE00C7F908 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		EE934C9E1A5278FE00C7F908 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
-		EE934C9F1A5278FE00C7F908 /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
+		EE934C9F1A5278FE00C7F908 /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; wrapsLines = 1; };
 		EE934CA11A5278FE00C7F908 /* AutoLogin.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AutoLogin.h; sourceTree = "<group>"; };
 		EE934CA21A5278FE00C7F908 /* AutoLogin.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AutoLogin.m; sourceTree = "<group>"; };
 		EE934CA71A5278FE00C7F908 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
@@ -162,6 +172,12 @@
 				E290A7CE1A89DBCB00196002 /* RegisterUser.h */,
 				E290A7CF1A89DBCB00196002 /* RegisterUser.m */,
 				E290A7D01A89DBCB00196002 /* RegisterUser.xib */,
+				E28944601AA41B2F009ADF72 /* ChangePass.h */,
+				E28944611AA41B2F009ADF72 /* ChangePass.m */,
+				E28944621AA41B2F009ADF72 /* ChangePass.xib */,
+				E28944631AA41B2F009ADF72 /* ChangeUser.h */,
+				E28944641AA41B2F009ADF72 /* ChangeUser.m */,
+				E28944651AA41B2F009ADF72 /* ChangeUser.xib */,
 				EE934CA71A5278FE00C7F908 /* Images.xcassets */,
 				EE934C9A1A5278FE00C7F908 /* Supporting Files */,
 			);
@@ -313,10 +329,12 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				E28944691AA41B2F009ADF72 /* ChangeUser.xib in Resources */,
 				EE986CFA1A5FBE6500B6E03E /* LoadData.xib in Resources */,
 				EE934CE51A52818E00C7F908 /* AutoLogin.xib in Resources */,
 				EE934CA81A5278FE00C7F908 /* Images.xcassets in Resources */,
 				EE986CF01A5FBE5700B6E03E /* DataManager.xib in Resources */,
+				E28944671AA41B2F009ADF72 /* ChangePass.xib in Resources */,
 				EE986CF51A5FBE5E00B6E03E /* AddData.xib in Resources */,
 				E290A7D21A89DBCB00196002 /* Login.xib in Resources */,
 				E290A7D41A89DBCB00196002 /* RegisterUser.xib in Resources */,
@@ -332,6 +350,7 @@
 			files = (
 				EE986D4D1A5FD4B900B6E03E /* UIRefreshControl+AFNetworking.m in Sources */,
 				EE986D431A5FD4B900B6E03E /* AFURLConnectionOperation.m in Sources */,
+				E28944661AA41B2F009ADF72 /* ChangePass.m in Sources */,
 				EE934CA31A5278FE00C7F908 /* AutoLogin.m in Sources */,
 				EE986D4C1A5FD4B900B6E03E /* UIProgressView+AFNetworking.m in Sources */,
 				EE934CA01A5278FE00C7F908 /* AppDelegate.m in Sources */,
@@ -349,6 +368,7 @@
 				EE986D461A5FD4B900B6E03E /* AFURLSessionManager.m in Sources */,
 				E290A7D31A89DBCB00196002 /* RegisterUser.m in Sources */,
 				EE934C9D1A5278FE00C7F908 /* main.m in Sources */,
+				E28944681AA41B2F009ADF72 /* ChangeUser.m in Sources */,
 				EE986CF41A5FBE5E00B6E03E /* AddData.m in Sources */,
 				EE986D401A5FD4B900B6E03E /* AFHTTPSessionManager.m in Sources */,
 				EE986CFE1A5FBEA200B6E03E /* MBProgressHUD.m in Sources */,

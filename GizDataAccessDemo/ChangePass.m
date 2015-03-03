@@ -1,16 +1,17 @@
 //
-//  RegisterUser.m
+//  ChangePass.m
 //  GizDataAccessDemo-Debug
 //
 //  Created by GeHaitong on 15/2/10.
 //  Copyright (c) 2015年 xpg. All rights reserved.
 //
 
-#import "RegisterUser.h"
+#import "ChangePass.h"
 
-@interface RegisterUser () <GizDataAccessLoginDelegate, UITextFieldDelegate>
+@interface ChangePass () <GizDataAccessLoginDelegate, UITextFieldDelegate>
 
 @property (weak, nonatomic) IBOutlet UILabel *textUserName;
+@property (weak, nonatomic) IBOutlet UILabel *textPassName;
 
 @property (weak, nonatomic) IBOutlet UITextField *textUser;
 @property (weak, nonatomic) IBOutlet UITextField *textPassword;
@@ -18,19 +19,20 @@
 
 @property (weak, nonatomic) IBOutlet UIView *viewVerifyCode;
 
-@property (assign, nonatomic) RegisterUserType type;
+@property (assign, nonatomic) ChangePassType type;
 
 @property (strong, nonatomic) GizDataAccessLogin *gizLogin;
 
+@property (weak, nonatomic) IBOutlet UIButton *btnChange;
 @property (weak, nonatomic) IBOutlet UIButton *btnVerifyCode;
 @property (strong, nonatomic) NSTimer *timer;
 @property (assign, nonatomic) NSInteger timerCounter;
 
 @end
 
-@implementation RegisterUser
+@implementation ChangePass
 
-- (id)initWithType:(RegisterUserType)type
+- (id)initWithType:(ChangePassType)type
 {
     self = [super init];
     if(self)
@@ -45,20 +47,24 @@
     // Do any additional setup after loading the view from its nib.
     
     switch (self.type) {
-        case kRegisterUserTypeNormal:
-            self.navigationItem.title = @"注册普通用户";
-            self.textUserName.text = @"用户名";
+        case kChangePassTypeModify:
+            self.navigationItem.title = @"修改密码";
+            self.textUserName.text = @"旧密码";
+            [self.btnChange setTitle:@"修改" forState:UIControlStateNormal];
             [self.view sendSubviewToBack:self.viewVerifyCode];
             break;
-        case kRegisterUserTypePhone:
-            self.navigationItem.title = @"注册手机用户";
-            self.textUserName.text = @"手机号";
-            self.textPassword.returnKeyType = UIReturnKeyNext;
-            break;
-        case kRegisterUserTypeEmail:
-            self.navigationItem.title = @"注册邮箱用户";
+        case kChangePassTypeResetEmail:
+            self.navigationItem.title = @"通过邮箱重置密码";
             self.textUserName.text = @"邮箱";
             [self.view sendSubviewToBack:self.viewVerifyCode];
+            self.textPassName.alpha = 0;
+            self.textPassword.alpha = 0;
+            self.textUser.returnKeyType = UIReturnKeyDone;
+            break;
+        case kChangePassTypeResetPhone:
+            self.navigationItem.title = @"通过手机重置密码";
+            self.textUserName.text = @"手机号";
+            self.textPassword.returnKeyType = UIReturnKeyNext;
             break;
         default:
             break;
@@ -88,24 +94,23 @@
 }
 */
 
-- (IBAction)onRegister:(id)sender {
+- (IBAction)onChange:(id)sender {
     GizDataAccessAccountType accountType;
     
     switch (self.type) {
-        case kRegisterUserTypeNormal:
-            accountType = kGizDataAccessAccountTypeNormal;
-            break;
-        case kRegisterUserTypePhone:
-            accountType = kGizDataAccessAccountTypePhone;
-            break;
-        case kRegisterUserTypeEmail:
+        case kChangePassTypeModify:
+            [self.gizLogin changeUserPassword:_token oldPassword:self.textUser.text newPassword:self.textPassword.text];
+            return;
+        case kChangePassTypeResetEmail:
             accountType = kGizDataAccessAccountTypeEmail;
+            break;
+        case kChangePassTypeResetPhone:
+            accountType = kGizDataAccessAccountTypePhone;
             break;
         default:
             return;
     }
-    
-    [self.gizLogin registerUser:self.textUser.text password:self.textPassword.text code:self.textVerifyCode.text accountType:accountType];
+    [self.gizLogin resetPassword:self.textUser.text code:self.textVerifyCode.text newPassword:self.textPassword.text accountType:accountType];
 }
 
 - (IBAction)onQueryVerifyCode:(id)sender {
@@ -164,32 +169,55 @@
 - (BOOL)textFieldShouldReturn:(UITextField *)textField
 {
     if(textField == self.textUser)
+    {
+        if(self.type == kChangePassTypeResetEmail)
+        {
+            [self onChange:textField];
+            return YES;
+        }
         [self.textPassword becomeFirstResponder];
+    }
     if(textField == self.textPassword)
     {
-        if(self.type == kRegisterUserTypePhone)
+        if(self.type == kChangePassTypeResetPhone)
             [self.textVerifyCode becomeFirstResponder];
         else
-            [self onRegister:textField];
+            [self onChange:textField];
     }
     if(textField == self.textVerifyCode)
     {
-        [self onRegister:textField];
+        [self onChange:textField];
     }
     return YES;
 }
 
-- (void)gizDataAccess:(GizDataAccessLogin *)login didRegisterUser:(NSString *)uid token:(NSString *)token result:(GizDataAccessErrorCode)result message:(NSString *)message
+- (void)gizDataAccess:(GizDataAccessLogin *)login didChangeUserPassword:(GizDataAccessErrorCode)result message:(NSString *)message
 {
     if(result == kGizDataAccessErrorNone)
     {
-        [[[UIAlertView alloc] initWithTitle:@"提示" message:@"注册成功" delegate:nil cancelButtonTitle:@"确定" otherButtonTitles: nil] show];
+        NSString *strMsg = @"重置成功";
+        switch (self.type) {
+            case kChangePassTypeModify:
+                strMsg = @"修改密码成功";
+                break;
+            case kChangePassTypeResetEmail:
+                strMsg = @"已成功向邮箱发送重置邮件";
+                break;
+            default:
+                break;
+        }
+
+        [[[UIAlertView alloc] initWithTitle:@"提示" message:strMsg delegate:nil cancelButtonTitle:@"确定" otherButtonTitles: nil] show];
         [self.navigationController popViewControllerAnimated:YES];
     }
     else
     {
-        NSString *msg = [NSString stringWithFormat:@"注册失败\n%@", message];
-        [[[UIAlertView alloc] initWithTitle:@"提示" message:msg delegate:nil cancelButtonTitle:@"确定" otherButtonTitles: nil] show];
+        NSString *strMsg = [NSString stringWithFormat:@"重置失败\n%@", message];
+        if(self.type == kChangePassTypeModify)
+        {
+            strMsg = [NSString stringWithFormat:@"修改密码失败\n%@", message];
+        }
+        [[[UIAlertView alloc] initWithTitle:@"提示" message:strMsg delegate:nil cancelButtonTitle:@"确定" otherButtonTitles: nil] show];
     }
 }
 

@@ -10,6 +10,7 @@
 
 #import "AutoLogin.h"
 #import "RegisterUser.h"
+#import "ChangePass.h"
 
 @interface Login () <UIActionSheetDelegate, UITextFieldDelegate>
 
@@ -27,7 +28,17 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view from its nib.
-    self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"注册" style:UIBarButtonItemStylePlain target:self action:@selector(onRegister)];
+    self.navigationItem.rightBarButtonItems =
+  @[[[UIBarButtonItem alloc] initWithTitle:@"忘记密码" style:UIBarButtonItemStylePlain target:self action:@selector(onForgetPassword)],
+    [[UIBarButtonItem alloc] initWithTitle:@"注册" style:UIBarButtonItemStylePlain target:self action:@selector(onRegister)]];
+    self.navigationItem.title = @"登录";
+}
+
+- (void)viewWillAppear:(BOOL)animated
+{
+    [super viewWillAppear:animated];
+    self.textPass.text = @"";
+    self.textToken.text = @"";
 }
 
 - (void)didReceiveMemoryWarning {
@@ -73,10 +84,14 @@
 }
 
 - (void)onRegister {
-#warning 第三方账号测试通过，还有手机、邮箱用户注册和登录未测试。Remaining：2 interfaces.
-    
     UIActionSheet *actionSheet = [[UIActionSheet alloc] initWithTitle:@"注册方式" delegate:self cancelButtonTitle:@"取消" destructiveButtonTitle:@"普通用户" otherButtonTitles:@"手机用户", @"邮箱用户", nil];
-    
+    actionSheet.tag = 1;
+    [actionSheet showInView:self.view];
+}
+
+- (void)onForgetPassword {
+    UIActionSheet *actionSheet = [[UIActionSheet alloc] initWithTitle:@"忘记密码" delegate:self cancelButtonTitle:@"取消" destructiveButtonTitle:@"手机用户" otherButtonTitles:@"邮箱用户", nil];
+    actionSheet.tag = 2;
     [actionSheet showInView:self.view];
 }
 
@@ -133,24 +148,54 @@
 
 - (void)actionSheet:(UIActionSheet *)actionSheet didDismissWithButtonIndex:(NSInteger)buttonIndex
 {
-    RegisterUserType registerType;
-    switch (buttonIndex) {
-        case 0://普通用户
-            registerType = kRegisterUserTypeNormal;
-            break;
-        case 1://手机用户
-            registerType = kRegisterUserTypePhone;
-            break;
-        case 2://邮箱用户
-            registerType = kRegisterUserTypeEmail;
-            break;
+    switch (actionSheet.tag) {
+        case 1:
+        {
+            RegisterUserType registerType;
+
+            //注册
+            switch (buttonIndex) {
+                case 0://普通用户
+                    registerType = kRegisterUserTypeNormal;
+                    break;
+                case 1://手机用户
+                    registerType = kRegisterUserTypePhone;
+                    break;
+                case 2://邮箱用户
+                    registerType = kRegisterUserTypeEmail;
+                    break;
+                default:
+                    return;
+            }
             
+            RegisterUser *registerUserCtrl = [[RegisterUser alloc] initWithType:registerType];
+            [self.navigationController pushViewController:registerUserCtrl animated:YES];
+            break;
+        }
+        case 2:
+        {
+            ChangePassType changeType;
+            
+            //忘记密码
+            switch (buttonIndex) {
+                case 0://手机用户忘记密码
+                    changeType = kChangePassTypeResetPhone;
+                    break;
+                case 1://邮箱用户忘记密码
+                    changeType = kChangePassTypeResetEmail;
+                    break;
+                    
+                default:
+                    return;
+            }
+            
+            ChangePass *changePassCtrl = [[ChangePass alloc] initWithType:changeType];
+            [self.navigationController pushViewController:changePassCtrl animated:YES];
+            break;
+        }
         default:
-            return;
+            break;
     }
-    
-    RegisterUser *registerUserCtrl = [[RegisterUser alloc] initWithType:registerType];
-    [self.navigationController pushViewController:registerUserCtrl animated:YES];
 }
 
 @end

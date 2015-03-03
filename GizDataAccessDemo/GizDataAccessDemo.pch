@@ -33,9 +33,11 @@
 //#define PRODUCT_KEY @"04913060d66e4b928682900ca1fbff41"
 #define PRODUCT_SN  @"sn"
 
-#define PRODUCT_KEY @"25ee6d29f9f74743a6ee4fdcca8d4869"
+#define PRODUCT_KEY @"fa772600fc73479ab0b35af373dde5d6"
 
 //这些，是临时的数据存储
+extern BOOL _isAnonymousUser;                          //匿名用户判断
+extern BOOL _isThirdUser;                              //第三方用户判断
 extern NSString     *_token;                           //登录sesson
 extern NSArray      *_datas;                           //用于列表显示的数据
 //

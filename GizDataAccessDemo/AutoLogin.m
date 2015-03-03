@@ -44,8 +44,8 @@ typedef enum
 @property (nonatomic, strong) NSString *password;
 
 @property (nonatomic, assign) GizDataAccessThirdAccountType thirdType;
-@property (nonatomic, strong) NSString *uid;
-@property (nonatomic, strong) NSString *token;
+@property (nonatomic, strong) NSString *strUid;
+@property (nonatomic, strong) NSString *strToken;
 
 @end
 
@@ -80,8 +80,8 @@ typedef enum
     {
         self.loginType = kAutoLoginTypeThirdAccountType;
         self.thirdType = thirdType;
-        self.uid = uid;
-        self.token = token;
+        self.strUid = uid;
+        self.strToken = token;
     }
     return self;
 }
@@ -119,7 +119,7 @@ typedef enum
             [gdaLogin login:self.username password:self.password];
             break;
         case kAutoLoginTypeThirdAccountType:
-            [gdaLogin loginWithThirdAccountType:self.thirdType uid:self.uid token:self.token];
+            [gdaLogin loginWithThirdAccountType:self.thirdType uid:self.strUid token:self.strToken];
             break;
         default:
             break;
@@ -127,13 +127,30 @@ typedef enum
 }
 
 #pragma mark - delegates
-- (void)gizDataAccessDidLogin:(GizDataAccessLogin *)login uid:(NSString *)uid token:(NSString *)token result:(GizDataAccessErrorCode)result message:(NSString *)message
+- (void)gizDataAccess:(GizDataAccessLogin *)login didLogin:(NSString *)uid token:(NSString *)token result:(GizDataAccessErrorCode)result message:(NSString *)message
 {
     NSLog(@"token:%@", token);
     _token = token;
     
     if(result == kGizDataAccessErrorNone)
     {
+        switch (self.loginType) {
+            case kAutoLoginTypeNormal:
+                _isAnonymousUser = NO;
+                _isThirdUser = NO;
+                break;
+            case kAutoLoginTypeAnonymous:
+                _isAnonymousUser = YES;
+                _isThirdUser = NO;
+                break;
+            case kAutoLoginTypeThirdAccountType:
+                _isAnonymousUser = NO;
+                _isThirdUser = YES;
+                break;
+            default:
+                break;
+        }
+        
         //跳转
         DataManager *dataManagerCtrl = [[DataManager alloc] init];
         [self.navigationController pushViewController:dataManagerCtrl animated:YES];

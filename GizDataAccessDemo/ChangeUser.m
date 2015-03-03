@@ -1,36 +1,36 @@
 //
-//  RegisterUser.m
+//  ChangeUser.m
 //  GizDataAccessDemo-Debug
 //
 //  Created by GeHaitong on 15/2/10.
 //  Copyright (c) 2015年 xpg. All rights reserved.
 //
 
-#import "RegisterUser.h"
+#import "ChangeUser.h"
 
-@interface RegisterUser () <GizDataAccessLoginDelegate, UITextFieldDelegate>
+@interface ChangeUser () <GizDataAccessLoginDelegate, UITextFieldDelegate>
 
 @property (weak, nonatomic) IBOutlet UILabel *textUserName;
 
 @property (weak, nonatomic) IBOutlet UITextField *textUser;
-@property (weak, nonatomic) IBOutlet UITextField *textPassword;
 @property (weak, nonatomic) IBOutlet UITextField *textVerifyCode;
 
 @property (weak, nonatomic) IBOutlet UIView *viewVerifyCode;
 
-@property (assign, nonatomic) RegisterUserType type;
+@property (assign, nonatomic) ChangeUserType type;
 
 @property (strong, nonatomic) GizDataAccessLogin *gizLogin;
 
+@property (weak, nonatomic) IBOutlet UIButton *btnChange;
 @property (weak, nonatomic) IBOutlet UIButton *btnVerifyCode;
 @property (strong, nonatomic) NSTimer *timer;
 @property (assign, nonatomic) NSInteger timerCounter;
 
 @end
 
-@implementation RegisterUser
+@implementation ChangeUser
 
-- (id)initWithType:(RegisterUserType)type
+- (id)initWithType:(ChangeUserType)type
 {
     self = [super init];
     if(self)
@@ -45,20 +45,15 @@
     // Do any additional setup after loading the view from its nib.
     
     switch (self.type) {
-        case kRegisterUserTypeNormal:
-            self.navigationItem.title = @"注册普通用户";
-            self.textUserName.text = @"用户名";
-            [self.view sendSubviewToBack:self.viewVerifyCode];
-            break;
-        case kRegisterUserTypePhone:
-            self.navigationItem.title = @"注册手机用户";
-            self.textUserName.text = @"手机号";
-            self.textPassword.returnKeyType = UIReturnKeyNext;
-            break;
-        case kRegisterUserTypeEmail:
-            self.navigationItem.title = @"注册邮箱用户";
+        case kChangeUserTypeEmail:
+            self.navigationItem.title = @"普通用户修改邮箱";
             self.textUserName.text = @"邮箱";
             [self.view sendSubviewToBack:self.viewVerifyCode];
+            self.textUser.returnKeyType = UIReturnKeyDone;
+            break;
+        case kChangeUserTypePhone:
+            self.navigationItem.title = @"普通用户修改手机";
+            self.textUserName.text = @"手机号";
             break;
         default:
             break;
@@ -88,24 +83,20 @@
 }
 */
 
-- (IBAction)onRegister:(id)sender {
+- (IBAction)onChange:(id)sender {
     GizDataAccessAccountType accountType;
     
     switch (self.type) {
-        case kRegisterUserTypeNormal:
-            accountType = kGizDataAccessAccountTypeNormal;
-            break;
-        case kRegisterUserTypePhone:
-            accountType = kGizDataAccessAccountTypePhone;
-            break;
-        case kRegisterUserTypeEmail:
+        case kChangeUserTypeEmail:
             accountType = kGizDataAccessAccountTypeEmail;
+            break;
+        case kChangeUserTypePhone:
+            accountType = kGizDataAccessAccountTypePhone;
             break;
         default:
             return;
     }
-    
-    [self.gizLogin registerUser:self.textUser.text password:self.textPassword.text code:self.textVerifyCode.text accountType:accountType];
+    [self.gizLogin changeUser:_token username:self.textUser.text code:self.textVerifyCode.text accountType:accountType];
 }
 
 - (IBAction)onQueryVerifyCode:(id)sender {
@@ -128,68 +119,38 @@
 
 - (IBAction)onTap:(id)sender {
     [self.textUser resignFirstResponder];
-    [self.textPassword resignFirstResponder];
     [self.textVerifyCode resignFirstResponder];
-}
-
-- (void)textFieldDidBeginEditing:(UITextField *)textField
-{
-    [UIView beginAnimations:nil context:nil];
-    [UIView setAnimationsEnabled:YES];
-    
-    CGRect frame = self.view.frame;
-    if(textField == self.textUser)
-        frame.origin.y = 64;
-    if(textField == self.textPassword)
-        frame.origin.y = 0;
-    if(textField == self.textVerifyCode)
-        frame.origin.y = 0;
-    self.view.frame = frame;
-    
-    [UIView commitAnimations];
-}
-
-- (void)textFieldDidEndEditing:(UITextField *)textField
-{
-    [UIView beginAnimations:nil context:nil];
-    [UIView setAnimationsEnabled:YES];
-    
-    CGRect frame = self.view.frame;
-    frame.origin.y = 64;
-    self.view.frame = frame;
-    
-    [UIView commitAnimations];
 }
 
 - (BOOL)textFieldShouldReturn:(UITextField *)textField
 {
     if(textField == self.textUser)
-        [self.textPassword becomeFirstResponder];
-    if(textField == self.textPassword)
     {
-        if(self.type == kRegisterUserTypePhone)
-            [self.textVerifyCode becomeFirstResponder];
-        else
-            [self onRegister:textField];
+        if(self.type == kChangeUserTypeEmail)
+        {
+            [self onChange:textField];
+            return YES;
+        }
+        [self.textVerifyCode becomeFirstResponder];
     }
     if(textField == self.textVerifyCode)
     {
-        [self onRegister:textField];
+        [self onChange:textField];
     }
     return YES;
 }
 
-- (void)gizDataAccess:(GizDataAccessLogin *)login didRegisterUser:(NSString *)uid token:(NSString *)token result:(GizDataAccessErrorCode)result message:(NSString *)message
+- (void)gizDataAccess:(GizDataAccessLogin *)login didChangeUser:(GizDataAccessErrorCode)result message:(NSString *)message
 {
     if(result == kGizDataAccessErrorNone)
     {
-        [[[UIAlertView alloc] initWithTitle:@"提示" message:@"注册成功" delegate:nil cancelButtonTitle:@"确定" otherButtonTitles: nil] show];
+        [[[UIAlertView alloc] initWithTitle:@"提示" message:@"修改成功" delegate:nil cancelButtonTitle:@"确定" otherButtonTitles: nil] show];
         [self.navigationController popViewControllerAnimated:YES];
     }
     else
     {
-        NSString *msg = [NSString stringWithFormat:@"注册失败\n%@", message];
-        [[[UIAlertView alloc] initWithTitle:@"提示" message:msg delegate:nil cancelButtonTitle:@"确定" otherButtonTitles: nil] show];
+        NSString *strMsg = [NSString stringWithFormat:@"修改失败\n%@", message];
+        [[[UIAlertView alloc] initWithTitle:@"提示" message:strMsg delegate:nil cancelButtonTitle:@"确定" otherButtonTitles: nil] show];
     }
 }
 

@@ -25,8 +25,10 @@
 #import "DataManager.h"
 #import "AddData.h"
 #import "LoadData.h"
+#import "ChangePass.h"
+#import "ChangeUser.h"
 
-@interface DataManager () <GizDataAccessSourceDelegate, UITableViewDataSource, UITableViewDelegate, LoadDataDelegate>
+@interface DataManager () <GizDataAccessSourceDelegate, UITableViewDataSource, UITableViewDelegate, LoadDataDelegate, UIActionSheetDelegate>
 {
     LoadData *loadDataCtrl;
 }
@@ -40,10 +42,7 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view from its nib.
-    UIBarButtonItem *leftItem1 = [[UIBarButtonItem alloc] initWithTitle:@"添加数据" style:UIBarButtonItemStylePlain target:self action:@selector(onAddItem)];
-    UIBarButtonItem *leftItem2 = [[UIBarButtonItem alloc] initWithTitle:@"注销" style:UIBarButtonItemStylePlain target:self action:@selector(onLogout)];
-    
-    self.navigationItem.leftBarButtonItems = @[leftItem1, leftItem2];
+    self.navigationItem.leftBarButtonItem =  [[UIBarButtonItem alloc] initWithTitle:@"菜单" style:UIBarButtonItemStylePlain target:self action:@selector(onMenu)];
     self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"设定查询条件" style:UIBarButtonItemStylePlain target:self action:@selector(onLoadData)];
     self.navigationItem.title = @"查询结果";
 }
@@ -60,22 +59,15 @@
 }
 
 #pragma mark - actions
-- (void)onAddItem {
-    AddData *addDataCtrl = [[AddData alloc] init];
-    [self.navigationController pushViewController:addDataCtrl animated:YES];
+- (void)onMenu {
+    UIActionSheet *actionSheet = [[UIActionSheet alloc] initWithTitle:@"注册方式" delegate:self cancelButtonTitle:@"取消" destructiveButtonTitle:@"添加数据" otherButtonTitles:@"注销", @"修改密码", @"普通用户修改手机", @"普通用户修改邮箱", nil];
+    [actionSheet showInView:self.view];
 }
 
 - (void)onLoadData {
     loadDataCtrl = [[LoadData alloc] initWithDelegate:self];
 //    [self.navigationController pushViewController:loadDataCtrl animated:YES];
     [loadDataCtrl show];
-}
-
-- (void)onLogout {
-    [self.navigationController popToRootViewControllerAnimated:YES];
-    
-    //清除登录信息
-    _token = nil;
 }
 
 #pragma mark - table view data source
@@ -127,6 +119,66 @@
     {
         _datas = data;
         [self.tableView reloadData];
+    }
+}
+
+#pragma mark = Action sheet
+- (void)actionSheet:(UIActionSheet *)actionSheet didDismissWithButtonIndex:(NSInteger)buttonIndex
+{
+    switch (buttonIndex) {
+        case 0://添加数据
+        {
+            AddData *addDataCtrl = [[AddData alloc] init];
+            [self.navigationController pushViewController:addDataCtrl animated:YES];
+            return;
+        }
+        case 1://注销
+        {
+            [self.navigationController popToRootViewControllerAnimated:YES];
+            
+            //清除登录信息
+            _token = nil;
+            _datas = nil;
+            break;
+        }
+        case 2://修改密码
+        {
+            if(!_isAnonymousUser && !_isThirdUser) {
+                ChangePassType changeType = kChangePassTypeModify;
+                ChangePass *changePassCtrl = [[ChangePass alloc] initWithType:changeType];
+                [self.navigationController pushViewController:changePassCtrl animated:YES];
+            }
+            else {
+                [[[UIAlertView alloc] initWithTitle:@"提示" message:@"匿名用户或者第三方用户不能通过 SDK 的 API 修改密码" delegate:nil cancelButtonTitle:@"确定" otherButtonTitles:nil] show];
+            }
+            break;
+        }
+        case 3://普通用户修改手机
+        {
+            if(!_isAnonymousUser) {
+                ChangeUserType changeType = kChangeUserTypePhone;
+                ChangeUser *changeUserCtrl = [[ChangeUser alloc] initWithType:changeType];
+                [self.navigationController pushViewController:changeUserCtrl animated:YES];
+            }
+            else {
+                [[[UIAlertView alloc] initWithTitle:@"提示" message:@"匿名用户不能修改手机，请转换成实名用户再试" delegate:nil cancelButtonTitle:@"确定" otherButtonTitles:nil] show];
+            }
+            break;
+        }
+        case 4://普通用户修改邮箱
+        {
+            if(!_isAnonymousUser) {
+                ChangeUserType changeType = kChangeUserTypeEmail;
+                ChangeUser *changeUserCtrl = [[ChangeUser alloc] initWithType:changeType];
+                [self.navigationController pushViewController:changeUserCtrl animated:YES];
+            }
+            else {
+                [[[UIAlertView alloc] initWithTitle:@"提示" message:@"匿名用户不能修改邮箱，请转换成实名用户再试" delegate:nil cancelButtonTitle:@"确定" otherButtonTitles:nil] show];
+            }
+            break;
+        }
+        default:
+            return;
     }
 }
 
