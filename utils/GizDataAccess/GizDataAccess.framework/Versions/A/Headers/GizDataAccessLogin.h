@@ -108,6 +108,22 @@
  */
 - (void)gizDataAccess:(GizDataAccessLogin *)login didChangeUser:(GizDataAccessErrorCode)result message:(NSString *)message;
 
+/**
+ *
+ * 转换匿名用户为实名用户（第三方账号除外）
+ *
+ * @param login 当前登录实例
+ *
+ * @param result 登录结果，成功或失败。详情参考 GizDataAccessErrorCode 定义
+ *
+ * @param message 错误信息，成功为 "Success"
+ *
+ * @see 触发函数：
+ * [GizDataAccessLogin transAnonymousUser:username:password:code:accountType:]
+ *
+ */
+- (void)gizDataAccess:(GizDataAccessLogin *)login didTransAnonymousUser:(GizDataAccessErrorCode)result message:(NSString *)message;
+
 @end
 
 /**
@@ -165,9 +181,10 @@
  *
  * 第三方用户登录。使用已注册好的第三方用户和密码，用第三方 SDK 获取到相应的 uid, token 即可登录
  *
- * @param thirdAccountType 第三方账号类型，目前支持新浪、百度
- * @param uid 通过第三方 SDK 得到的用户 id
- * @param token 通过第三方 SDK 得到的用户 token
+ * @param thi           rdAccountType 第三方账号类型，目前支持新浪、百度
+ * @param uid           通过第三方 SDK 得到的用户 id
+ * @param token         通过第三方 SDK 得到的用户 token
+ * @param accountType   账号类型
  *
  * @see 对应的回调接口：[GizDataAccessLoginDelegate gizDataAccess:didLogin:token:result:message:]
  *
@@ -204,8 +221,9 @@
  * 重置手机或邮箱用户密码
  *
  * @param username      只能是手机号或者邮箱
- * @param code          当输入手机号时，需要输入手机验证码
- * @param newPassword   当输入手机号时，需要输入新密码
+ * @param code          用户类型是手机时，需要输入手机验证码
+ * @param newPassword   用户类型是手机时，需要输入新密码
+ * @param accountType   账号类型
  *
  * @see 对应的回调接口：[GizDataAccessLoginDelegate gizDataAccess:didChangeUserPassword:message:]
  *
@@ -218,11 +236,26 @@
  *
  * @param token         登录成功后得到的token（用户鉴权令牌）
  * @param username      用户名，只能是手机号和邮箱
- * @param code          用户名是手机时，填写手机验证码
+ * @param code          用户类型是手机时，填写手机验证码
+ * @param accountType   账号类型
  *
  * @see 对应的回调接口：[GizDataAccessLoginDelegate gizDataAccess:didChangeUser:message:]
  *
  */
 - (void)changeUser:(NSString *)token username:(NSString *)username code:(NSString *)code accountType:(GizDataAccessAccountType)accountType;
+
+/**
+ * 转换匿名用户为实名用户（第三方账号除外）
+ *
+ * @param token         登录成功后得到的token（用户鉴权令牌）
+ * @param username      用户名，可以是手机号、邮箱、普通用户名
+ * @param password      密码
+ * @param code          用户类型是手机时，填写手机号码
+ * @param accountType   账号类型。该接口 kGizDataAccessAccountTypeNormal 包含邮箱的方法，所以 kGizDataAccessAccountTypeEmail 不适用于这个接口
+ *
+ * @see 对应的回调接口：[GizDataAccessLoginDelegate gizDataAccess:didtransAnonymousUser:message:]
+ *
+ */
+- (void)transAnonymousUser:(NSString *)token username:(NSString *)username password:(NSString *)password code:(NSString *)code accountType:(GizDataAccessAccountType)accountType;
 
 @end

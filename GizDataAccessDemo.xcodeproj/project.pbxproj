@@ -16,6 +16,8 @@
 		E290A7D21A89DBCB00196002 /* Login.xib in Resources */ = {isa = PBXBuildFile; fileRef = E290A7CD1A89DBCB00196002 /* Login.xib */; };
 		E290A7D31A89DBCB00196002 /* RegisterUser.m in Sources */ = {isa = PBXBuildFile; fileRef = E290A7CF1A89DBCB00196002 /* RegisterUser.m */; };
 		E290A7D41A89DBCB00196002 /* RegisterUser.xib in Resources */ = {isa = PBXBuildFile; fileRef = E290A7D01A89DBCB00196002 /* RegisterUser.xib */; };
+		E2A1511F1AA70A17007B3AF8 /* TransAnonymous.m in Sources */ = {isa = PBXBuildFile; fileRef = E2A1511D1AA70A17007B3AF8 /* TransAnonymous.m */; };
+		E2A151201AA70A17007B3AF8 /* TransAnonymous.xib in Resources */ = {isa = PBXBuildFile; fileRef = E2A1511E1AA70A17007B3AF8 /* TransAnonymous.xib */; };
 		EE934C9D1A5278FE00C7F908 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = EE934C9C1A5278FE00C7F908 /* main.m */; };
 		EE934CA01A5278FE00C7F908 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = EE934C9F1A5278FE00C7F908 /* AppDelegate.m */; };
 		EE934CA31A5278FE00C7F908 /* AutoLogin.m in Sources */ = {isa = PBXBuildFile; fileRef = EE934CA21A5278FE00C7F908 /* AutoLogin.m */; };
@@ -61,6 +63,9 @@
 		E290A7CE1A89DBCB00196002 /* RegisterUser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RegisterUser.h; sourceTree = "<group>"; };
 		E290A7CF1A89DBCB00196002 /* RegisterUser.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RegisterUser.m; sourceTree = "<group>"; };
 		E290A7D01A89DBCB00196002 /* RegisterUser.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = RegisterUser.xib; sourceTree = "<group>"; };
+		E2A1511C1AA70A17007B3AF8 /* TransAnonymous.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TransAnonymous.h; sourceTree = "<group>"; };
+		E2A1511D1AA70A17007B3AF8 /* TransAnonymous.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TransAnonymous.m; sourceTree = "<group>"; };
+		E2A1511E1AA70A17007B3AF8 /* TransAnonymous.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = TransAnonymous.xib; sourceTree = "<group>"; };
 		EE934C971A5278FE00C7F908 /* GizDataAccessDemo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = GizDataAccessDemo.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		EE934C9B1A5278FE00C7F908 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		EE934C9C1A5278FE00C7F908 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
@@ -186,6 +191,9 @@
 				E28944631AA41B2F009ADF72 /* ChangeUser.h */,
 				E28944641AA41B2F009ADF72 /* ChangeUser.m */,
 				E28944651AA41B2F009ADF72 /* ChangeUser.xib */,
+				E2A1511C1AA70A17007B3AF8 /* TransAnonymous.h */,
+				E2A1511D1AA70A17007B3AF8 /* TransAnonymous.m */,
+				E2A1511E1AA70A17007B3AF8 /* TransAnonymous.xib */,
 				EE934CA71A5278FE00C7F908 /* Images.xcassets */,
 				EE934C9A1A5278FE00C7F908 /* Supporting Files */,
 			);
@@ -341,6 +349,7 @@
 				EE986CFA1A5FBE6500B6E03E /* LoadData.xib in Resources */,
 				EE934CE51A52818E00C7F908 /* AutoLogin.xib in Resources */,
 				EE934CA81A5278FE00C7F908 /* Images.xcassets in Resources */,
+				E2A151201AA70A17007B3AF8 /* TransAnonymous.xib in Resources */,
 				EE986CF01A5FBE5700B6E03E /* DataManager.xib in Resources */,
 				E28944671AA41B2F009ADF72 /* ChangePass.xib in Resources */,
 				EE986CF51A5FBE5E00B6E03E /* AddData.xib in Resources */,
@@ -380,6 +389,7 @@
 				EE986CF41A5FBE5E00B6E03E /* AddData.m in Sources */,
 				EE986D401A5FD4B900B6E03E /* AFHTTPSessionManager.m in Sources */,
 				EE986CFE1A5FBEA200B6E03E /* MBProgressHUD.m in Sources */,
+				E2A1511F1AA70A17007B3AF8 /* TransAnonymous.m in Sources */,
 				EE986D4E1A5FD4B900B6E03E /* UIWebView+AFNetworking.m in Sources */,
 				EE986D411A5FD4B900B6E03E /* AFNetworkReachabilityManager.m in Sources */,
 				EE986D4B1A5FD4B900B6E03E /* UIImageView+AFNetworking.m in Sources */,

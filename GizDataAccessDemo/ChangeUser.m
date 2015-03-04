@@ -106,15 +106,17 @@
 }
 
 - (void)onTimer:(NSTimer *)timer {
+    if(self.timerCounter == 0)
+    {
+        [self.btnVerifyCode setTitle:@"获取验证码" forState:UIControlStateNormal];
+        self.btnVerifyCode.enabled = YES;
+        [timer invalidate];
+        return;
+    }
+
     NSString *title = [NSString stringWithFormat:@"下次获取 %@ 秒", @(self.timerCounter)];
     [self.btnVerifyCode setTitle:title forState:UIControlStateNormal];
     self.timerCounter--;
-    
-    if(self.timerCounter == 0)
-    {
-        self.btnVerifyCode.enabled = YES;
-        [timer invalidate];
-    }
 }
 
 - (IBAction)onTap:(id)sender {
@@ -167,7 +169,7 @@
         //计时器60秒
         self.timerCounter = 60;
         [self.timer invalidate];
-        self.timer = [NSTimer scheduledTimerWithTimeInterval:1 target:self selector:@selector(timer) userInfo:nil repeats:YES];
+        self.timer = [NSTimer scheduledTimerWithTimeInterval:1 target:self selector:@selector(onTimer:) userInfo:nil repeats:YES];
         [self onTimer:self.timer];
         
         [[[UIAlertView alloc] initWithTitle:@"提示" message:@"服务器已成功发送验证码" delegate:nil cancelButtonTitle:@"确定" otherButtonTitles: nil] show];

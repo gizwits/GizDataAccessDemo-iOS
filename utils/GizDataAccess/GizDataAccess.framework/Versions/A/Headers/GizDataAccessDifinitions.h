@@ -96,7 +96,11 @@ typedef NS_ENUM(NSInteger, GizDataAccessThirdAccountType)
     /**
      * 使用百度账号登陆
      */
-    kGizDataAccessThirdAccountTypeBAIDU
+    kGizDataAccessThirdAccountTypeBAIDU,
+    /**
+     * 使用 QQ 账号登陆
+     */
+    kGizDataAccessThirdAccountTypeQQ
 };
 
 typedef NS_ENUM(NSInteger, GizDataAccessAccountType)

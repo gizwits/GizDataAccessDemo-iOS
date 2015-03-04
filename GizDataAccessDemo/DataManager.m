@@ -27,6 +27,7 @@
 #import "LoadData.h"
 #import "ChangePass.h"
 #import "ChangeUser.h"
+#import "TransAnonymous.h"
 
 @interface DataManager () <GizDataAccessSourceDelegate, UITableViewDataSource, UITableViewDelegate, LoadDataDelegate, UIActionSheetDelegate>
 {
@@ -60,7 +61,15 @@
 
 #pragma mark - actions
 - (void)onMenu {
-    UIActionSheet *actionSheet = [[UIActionSheet alloc] initWithTitle:@"注册方式" delegate:self cancelButtonTitle:@"取消" destructiveButtonTitle:@"添加数据" otherButtonTitles:@"注销", @"修改密码", @"普通用户修改手机", @"普通用户修改邮箱", nil];
+    NSString *titlePhone = @"匿名用户转换手机账号";
+    NSString *titleNormal = @"匿名用户转换普通账号";
+    
+    if(!_isAnonymousUser) {
+        titlePhone = @"普通用户修改手机";
+        titleNormal = @"普通用户修改邮箱";
+    }
+    
+    UIActionSheet *actionSheet = [[UIActionSheet alloc] initWithTitle:@"菜单" delegate:self cancelButtonTitle:@"取消" destructiveButtonTitle:@"添加数据" otherButtonTitles:@"注销", @"修改密码", titlePhone, titleNormal, nil];
     [actionSheet showInView:self.view];
 }
 
@@ -161,7 +170,9 @@
                 [self.navigationController pushViewController:changeUserCtrl animated:YES];
             }
             else {
-                [[[UIAlertView alloc] initWithTitle:@"提示" message:@"匿名用户不能修改手机，请转换成实名用户再试" delegate:nil cancelButtonTitle:@"确定" otherButtonTitles:nil] show];
+                TransAnonymousType TransType = kTransAnonymousTypePhone;
+                TransAnonymous *TransCtrl = [[TransAnonymous alloc] initWithType:TransType];
+                [self.navigationController pushViewController:TransCtrl animated:YES];
             }
             break;
         }
@@ -173,7 +184,9 @@
                 [self.navigationController pushViewController:changeUserCtrl animated:YES];
             }
             else {
-                [[[UIAlertView alloc] initWithTitle:@"提示" message:@"匿名用户不能修改邮箱，请转换成实名用户再试" delegate:nil cancelButtonTitle:@"确定" otherButtonTitles:nil] show];
+                TransAnonymousType TransType = kTransAnonymousTypeNormal;
+                TransAnonymous *TransCtrl = [[TransAnonymous alloc] initWithType:TransType];
+                [self.navigationController pushViewController:TransCtrl animated:YES];
             }
             break;
         }

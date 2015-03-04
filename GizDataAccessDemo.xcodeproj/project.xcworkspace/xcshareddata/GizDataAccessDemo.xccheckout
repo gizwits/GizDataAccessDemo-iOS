@@ -10,31 +10,31 @@
 	<string>GizDataAccessDemo</string>
 	<key>IDESourceControlProjectOriginsDictionary</key>
 	<dict>
-		<key>511566AE8D1B717E9E9CF7E6D180E87D67D8F03B</key>
-		<string>github.com:ight32/GizDataAccessDemo-iOS.git</string>
+		<key>4A6B911296837471B66A2F4A13014E8638D96D2C</key>
+		<string>gitlab.xtremeprog.com:iotsdk/GizDataAccessSDK.git</string>
 	</dict>
 	<key>IDESourceControlProjectPath</key>
-	<string>GizDataAccessDemo.xcodeproj</string>
+	<string>src/iOS/demo/GizDataAccessDemo.xcodeproj</string>
 	<key>IDESourceControlProjectRelativeInstallPathDictionary</key>
 	<dict>
-		<key>511566AE8D1B717E9E9CF7E6D180E87D67D8F03B</key>
-		<string>../..</string>
+		<key>4A6B911296837471B66A2F4A13014E8638D96D2C</key>
+		<string>../../../../..</string>
 	</dict>
 	<key>IDESourceControlProjectURL</key>
-	<string>github.com:ight32/GizDataAccessDemo-iOS.git</string>
+	<string>gitlab.xtremeprog.com:iotsdk/GizDataAccessSDK.git</string>
 	<key>IDESourceControlProjectVersion</key>
 	<integer>111</integer>
 	<key>IDESourceControlProjectWCCIdentifier</key>
-	<string>511566AE8D1B717E9E9CF7E6D180E87D67D8F03B</string>
+	<string>4A6B911296837471B66A2F4A13014E8638D96D2C</string>
 	<key>IDESourceControlProjectWCConfigurations</key>
 	<array>
 		<dict>
 			<key>IDESourceControlRepositoryExtensionIdentifierKey</key>
 			<string>public.vcs.git</string>
 			<key>IDESourceControlWCCIdentifierKey</key>
-			<string>511566AE8D1B717E9E9CF7E6D180E87D67D8F03B</string>
+			<string>4A6B911296837471B66A2F4A13014E8638D96D2C</string>
 			<key>IDESourceControlWCCName</key>
-			<string>GizDataAccessDemo-iOS</string>
+			<string>GizDataAccessSDK</string>
 		</dict>
 	</array>
 </dict>

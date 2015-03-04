@@ -127,6 +127,7 @@
                     <segments>
                         <segment title="使用新浪账号"/>
                         <segment title="使用百度账号"/>
+                        <segment title="使用QQ账号"/>
                     </segments>
                 </segmentedControl>
                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="cWY-CP-OiA">

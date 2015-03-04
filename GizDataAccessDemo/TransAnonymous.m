@@ -1,14 +1,14 @@
 //
-//  ChangePass.m
+//  TransAnonymous.m
 //  GizDataAccessDemo-Debug
 //
 //  Created by GeHaitong on 15/2/10.
 //  Copyright (c) 2015年 xpg. All rights reserved.
 //
 
-#import "ChangePass.h"
+#import "TransAnonymous.h"
 
-@interface ChangePass () <GizDataAccessLoginDelegate, UITextFieldDelegate>
+@interface TransAnonymous () <GizDataAccessLoginDelegate, UITextFieldDelegate>
 
 @property (weak, nonatomic) IBOutlet UILabel *textUserName;
 @property (weak, nonatomic) IBOutlet UILabel *textPassName;
@@ -19,7 +19,7 @@
 
 @property (weak, nonatomic) IBOutlet UIView *viewVerifyCode;
 
-@property (assign, nonatomic) ChangePassType type;
+@property (assign, nonatomic) TransAnonymousType type;
 
 @property (strong, nonatomic) GizDataAccessLogin *gizLogin;
 
@@ -30,9 +30,9 @@
 
 @end
 
-@implementation ChangePass
+@implementation TransAnonymous
 
-- (id)initWithType:(ChangePassType)type
+- (id)initWithType:(TransAnonymousType)type
 {
     self = [super init];
     if(self)
@@ -47,22 +47,12 @@
     // Do any additional setup after loading the view from its nib.
     
     switch (self.type) {
-        case kChangePassTypeModify:
-            self.navigationItem.title = @"修改密码";
-            self.textUserName.text = @"旧密码";
-            [self.btnChange setTitle:@"修改" forState:UIControlStateNormal];
+        case kTransAnonymousTypeNormal:
+            self.navigationItem.title = @"匿名用户转换普通账号";
             [self.view sendSubviewToBack:self.viewVerifyCode];
             break;
-        case kChangePassTypeResetEmail:
-            self.navigationItem.title = @"通过邮箱重置密码";
-            self.textUserName.text = @"邮箱";
-            [self.view sendSubviewToBack:self.viewVerifyCode];
-            self.textPassName.alpha = 0;
-            self.textPassword.alpha = 0;
-            self.textUser.returnKeyType = UIReturnKeyDone;
-            break;
-        case kChangePassTypeResetPhone:
-            self.navigationItem.title = @"通过手机重置密码";
+        case kTransAnonymousTypePhone:
+            self.navigationItem.title = @"匿名用户转换手机账号";
             self.textUserName.text = @"手机号";
             self.textPassword.returnKeyType = UIReturnKeyNext;
             break;
@@ -98,19 +88,16 @@
     GizDataAccessAccountType accountType;
     
     switch (self.type) {
-        case kChangePassTypeModify:
-            [self.gizLogin changeUserPassword:_token oldPassword:self.textUser.text newPassword:self.textPassword.text];
-            return;
-        case kChangePassTypeResetEmail:
-            accountType = kGizDataAccessAccountTypeEmail;
+        case kTransAnonymousTypeNormal:
+            accountType = kGizDataAccessAccountTypeNormal;
             break;
-        case kChangePassTypeResetPhone:
+        case kTransAnonymousTypePhone:
             accountType = kGizDataAccessAccountTypePhone;
             break;
         default:
             return;
     }
-    [self.gizLogin resetPassword:self.textUser.text code:self.textVerifyCode.text newPassword:self.textPassword.text accountType:accountType];
+    [self.gizLogin transAnonymousUser:_token username:self.textUser.text password:self.textPassword.text code:self.textVerifyCode.text accountType:accountType];
 }
 
 - (IBAction)onQueryVerifyCode:(id)sender {
@@ -172,7 +159,7 @@
 {
     if(textField == self.textUser)
     {
-        if(self.type == kChangePassTypeResetEmail)
+        if(self.type == kTransAnonymousTypeNormal)
         {
             [self onChange:textField];
             return YES;
@@ -181,7 +168,7 @@
     }
     if(textField == self.textPassword)
     {
-        if(self.type == kChangePassTypeResetPhone)
+        if(self.type == kTransAnonymousTypePhone)
             [self.textVerifyCode becomeFirstResponder];
         else
             [self onChange:textField];
@@ -193,32 +180,19 @@
     return YES;
 }
 
-- (void)gizDataAccess:(GizDataAccessLogin *)login didChangeUserPassword:(GizDataAccessErrorCode)result message:(NSString *)message
+- (void)gizDataAccess:(GizDataAccessLogin *)login didTransAnonymousUser:(GizDataAccessErrorCode)result message:(NSString *)message
 {
     if(result == kGizDataAccessErrorNone)
     {
-        NSString *strMsg = @"重置成功";
-        switch (self.type) {
-            case kChangePassTypeModify:
-                strMsg = @"修改密码成功";
-                break;
-            case kChangePassTypeResetEmail:
-                strMsg = @"已成功向邮箱发送重置邮件";
-                break;
-            default:
-                break;
-        }
-
-        [[[UIAlertView alloc] initWithTitle:@"提示" message:strMsg delegate:nil cancelButtonTitle:@"确定" otherButtonTitles: nil] show];
+        //转换成功后，这个用户就不再是匿名用户了
+        _isAnonymousUser = NO;
+        
+        [[[UIAlertView alloc] initWithTitle:@"提示" message:@"转换成功" delegate:nil cancelButtonTitle:@"确定" otherButtonTitles: nil] show];
         [self.navigationController popViewControllerAnimated:YES];
     }
     else
     {
-        NSString *strMsg = [NSString stringWithFormat:@"重置失败\n%@", message];
-        if(self.type == kChangePassTypeModify)
-        {
-            strMsg = [NSString stringWithFormat:@"修改密码失败\n%@", message];
-        }
+        NSString *strMsg = [NSString stringWithFormat:@"转换失败\n%@", message];
         [[[UIAlertView alloc] initWithTitle:@"提示" message:strMsg delegate:nil cancelButtonTitle:@"确定" otherButtonTitles: nil] show];
     }
 }

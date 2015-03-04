@@ -38,7 +38,7 @@
 {
     [super viewWillAppear:animated];
     self.textPass.text = @"";
-    self.textToken.text = @"";
+//    self.textToken.text = @"";
 }
 
 - (void)didReceiveMemoryWarning {
@@ -74,6 +74,9 @@
             break;
         case 1:
             thirdType = kGizDataAccessThirdAccountTypeBAIDU;
+            break;
+        case 2:
+            thirdType = kGizDataAccessThirdAccountTypeQQ;
             break;
         default:
             [[[UIAlertView alloc] initWithTitle:@"提示" message:@"请选择类型" delegate:nil cancelButtonTitle:@"确定" otherButtonTitles:nil] show];
