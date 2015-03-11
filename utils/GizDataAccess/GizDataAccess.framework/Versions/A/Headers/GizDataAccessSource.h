@@ -30,7 +30,7 @@
  * @see 触发函数：[GizDataAccessSource loadData:productKey:deviceSN:startTime:endTime:limit:skip:]
  *
  */
-- (void)gizDataAccessDidSaveData:(GizDataAccessSource *)source result:(GizDataAccessErrorCode)result message:(NSString *)message;
+- (void)gizDataAccess:(GizDataAccessSource *)source didSaveData:(GizDataAccessErrorCode)result message:(NSString *)message;
 
 /**
  *
@@ -58,7 +58,7 @@
  * @see 触发函数：[GizDataAccessSource saveData:productKey:deviceSN:timestamp:attributes:]
  *
  */
-- (void)gizDataAccessDidLoadData:(GizDataAccessSource *)source data:(NSArray *)data result:(GizDataAccessErrorCode)result errorMessage:(NSString *)message;
+- (void)gizDataAccess:(GizDataAccessSource *)source didLoadData:(NSArray *)data result:(GizDataAccessErrorCode)result errorMessage:(NSString *)message;
 
 @end
 
@@ -82,6 +82,7 @@
 
 /**
  * 上传蓝牙数据到机智云服务器。
+ * 此接口只支持成功上传一条数据，如果APP有多条数据需要上传，应通过多次接口调用完成。
  *
  * @param token 用户登录回调给的对应字符串
  *
@@ -89,19 +90,19 @@
  *
  * @param deviceSN 蓝牙设备序列号
  *
- * @param timestamp 蓝牙设备数据产生的时间（以格林威治标准时间 1970年1月1日00:00:00.000 为准的时间戳），如果设定无效的时间值，将自动归零为1970年1月1日00:00:00.000。
+ * @param timestamp 蓝牙设备数据产生的时间（以格林威治标准时间 1970年1月1日00:00:00.000 为准的时间戳）。整数0为 格林威治标准时间，负整数为早于 格林威治标准时间 的时间，正整数为晚于 格林威治标准时间 的时间。
  *
- * @param attrs 自定义属性，对应的格式为标准JSON，
+ * @param attrs 自定义属性，对应的格式为标准JSON。JSON对象与蓝牙数据点应相一致，如果不一致，则会上传失败。一个JSON对象表示一条数据，如果传入多个JSON对象，则只有第一个JSON对象能够上传成功。
  *
  * @note attrs示例：{"attr1": "value1"}
  *
- * @see 对应的回调接口：[GizDataAccessSourceDelegate gizDataAccessDidSaveData:result:message:]
+ * @see 对应的回调接口：[GizDataAccessSourceDelegate gizDataAccess:didSaveData:message:]
  *
  */
 - (void)saveData:(NSString *)token productKey:(NSString *)productKey deviceSN:(NSString *)deviceSN timestamp:(int64_t)timestamp attributes:(NSString *)attrs;
 
 /**
- * 从机智云服务器获取蓝牙数据。
+ * 从机智云服务器获取蓝牙数据，接口参数为获取数据的条件。如果APP希望获取从 开始时间 之后的所有数据，将 截止时间 设置为晚于 最新数据的产生时间 即可。如果APP希望获取 截止时间 之前的所有数据，将 开始时间 设置为早于 最早数据的产生时间 即可。
  *
  * @param token 用户登录回调给的对应字符串
  *
@@ -109,15 +110,15 @@
  *
  * @param deviceSN 蓝牙设备序列号
  *
- * @param startTime 开始时间（以格林威治标准时间 1970年1月1日00:00:00.000 为准的时间戳），如果设定无效的时间值，将自动归零为1970年1月1日00:00:00.000。
+ * @param startTime 开始时间（以格林威治标准时间 1970年1月1日00:00:00.000 为准的时间戳）。整数0为 格林威治标准时间，正整数为晚于 格林威治标准时间 的时间，负整数为早于 格林威治标准时间 的时间。
  *
- * @param endTime 截止时间（以格林威治标准时间 1970年1月1日00:00:00.000 为准的时间戳），如果设定无效的时间值，将自动归零为1970年1月1日00:00:00.000。
+ * @param endTime 截止时间（以格林威治标准时间 1970年1月1日00:00:00.000 为准的时间戳）。整数0为 格林威治标准时间，正整数为晚于 格林威治标准时间 的时间，负整数为早于 格林威治标准时间 的时间。
  *
- * @param limit 限制最大获取条数。如果指定为0，则最多返回20条数据。如果指定为负数，则按绝对值返回数据条数。
+ * @param limit 限制最大获取条数，应指定为大于等于0的数。如果指定为0，则最多返回20条数据，如果指定负数，则获取失败。
  *
- * @param skip 从头开始跳过几条数据。应指定为大于等于0的数，如果指定负数，则获取失败。
+ * @param skip 从头开始跳过几条数据，应指定为大于等于0的数。如果指定负数，则获取失败。
  *
- * @see 对应的回调接口：[GizDataAccessSourceDelegate gizDataAccessDidLoadData:data:result:errorMessage:]
+ * @see 对应的回调接口：[GizDataAccessSourceDelegate gizDataAccess:didLoadData:result:errorMessage:]
  *
  */
 - (void)loadData:(NSString *)token productKey:(NSString *)productKey deviceSN:(NSString *)deviceSN startTime:(int64_t)startTime endTime:(int64_t)endTime limit:(NSInteger)limit skip:(NSInteger)skip;

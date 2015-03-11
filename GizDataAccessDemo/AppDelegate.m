@@ -23,9 +23,12 @@
  */
 
 #import "AppDelegate.h"
-#import "AutoLogin.h"
+//#import "AutoLogin.h"
+#import "Login.h"
 #import <GizDataAccess/GizDataAccess.h>
 
+BOOL _isAnonymousUser = NO;
+BOOL _isThirdUser = NO;
 NSString *_token = nil;
 NSArray *_datas = nil;
 
@@ -38,13 +41,14 @@ NSArray *_datas = nil;
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
     //Init SDK
-    [GizDataAccess startWithAppID:@"7a9a7b387df64979ac67518fb0b6649e"];
+    [GizDataAccess startWithAppID:@"fdcbf5f389fd40d99a01828f7f5029de"];
 //    [GizDataAccess setDataAccessDomainName:@"apiv4.iotsdk.com"];
     
     self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
     self.window.backgroundColor = [UIColor whiteColor];
 
-    self.navCtrl = [[UINavigationController alloc] initWithRootViewController:[[AutoLogin alloc] init]];
+    self.navCtrl = [[UINavigationController alloc] initWithRootViewController:[[Login alloc] init]];
+//    self.navCtrl = [[UINavigationController alloc] initWithRootViewController:[[AutoLogin alloc] init]];
     self.navCtrl.navigationBar.translucent = NO;
     self.window.rootViewController = self.navCtrl;
     [self.window makeKeyAndVisible];
@@ -85,12 +89,12 @@ NSArray *_datas = nil;
     // Called when the application is about to terminate. Save data if appropriate. See also applicationDidEnterBackground:.
 }
 
-- (void)gizDataAccessDidSaveData:(GizDataAccessSource *)source result:(GizDataAccessErrorCode)result message:(NSString *)message
+- (void)gizDataAccess:(GizDataAccessSource *)source didSaveData:(GizDataAccessErrorCode)result message:(NSString *)message
 {
     NSLog(@"Save data result: %@ message: %@", @(result), message);
 }
 
-- (void)gizDataAccessDidLoadData:(GizDataAccessSource *)source data:(NSArray *)data result:(GizDataAccessErrorCode)result errorMessage:(NSString *)message
+- (void)gizDataAccess:(GizDataAccessSource *)source didLoadData:(NSArray *)data result:(GizDataAccessErrorCode)result errorMessage:(NSString *)message
 {
     NSLog(@"Receive data: %@, result: %@ message: %@", data, @(result), message);
 }

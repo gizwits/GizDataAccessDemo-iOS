@@ -25,20 +25,72 @@
 #import "AutoLogin.h"
 #import "DataManager.h"
 
+typedef enum
+{
+    kAutoLoginTypeAnonymous,
+    kAutoLoginTypeNormal,
+    kAutoLoginTypeThirdAccountType
+}AutoLoginType;
+
 @interface AutoLogin () <GizDataAccessLoginDelegate, UIAlertViewDelegate>
 {
     GizDataAccessLogin *gdaLogin;
     GizDataAccessSource *gdaSource;
 }
 
+@property (nonatomic, assign) AutoLoginType loginType;
+
+@property (nonatomic, strong) NSString *username;
+@property (nonatomic, strong) NSString *password;
+
+@property (nonatomic, assign) GizDataAccessThirdAccountType thirdType;
+@property (nonatomic, strong) NSString *strUid;
+@property (nonatomic, strong) NSString *strToken;
+
 @end
 
 @implementation AutoLogin
 
+- (id)initWithAnonymous
+{
+    self = [super init];
+    if(self)
+    {
+        self.loginType = kAutoLoginTypeAnonymous;
+    }
+    return self;
+}
+
+- (id)initWithNormalUser:(NSString *)username password:(NSString *)password
+{
+    self = [super init];
+    if(self)
+    {
+        self.loginType = kAutoLoginTypeNormal;
+        self.username = username;
+        self.password = password;
+    }
+    return self;
+}
+
+- (id)initWithThirdAccountType:(GizDataAccessThirdAccountType)thirdType uid:(NSString *)uid token:(NSString *)token
+{
+    self = [super init];
+    if(self)
+    {
+        self.loginType = kAutoLoginTypeThirdAccountType;
+        self.thirdType = thirdType;
+        self.strUid = uid;
+        self.strToken = token;
+    }
+    return self;
+}
+
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view from its nib.
-    [self login];
+    self.navigationItem.hidesBackButton = YES;
+    [self performSelector:@selector(login) withObject:nil afterDelay:0.5];
 }
 
 - (void)didReceiveMemoryWarning {
@@ -58,30 +110,84 @@
 - (void)login {
     if(nil == gdaLogin)
         gdaLogin = [[GizDataAccessLogin alloc] initWithDelegate:self];
-    [gdaLogin loginAnonymous];
+    
+    switch (self.loginType) {
+        case kAutoLoginTypeAnonymous:
+            [gdaLogin loginAnonymous];
+            break;
+        case kAutoLoginTypeNormal:
+            [gdaLogin login:self.username password:self.password];
+            break;
+        case kAutoLoginTypeThirdAccountType:
+            [gdaLogin loginWithThirdAccountType:self.thirdType uid:self.strUid token:self.strToken];
+            break;
+        default:
+            break;
+    }
 }
 
 #pragma mark - delegates
-- (void)gizDataAccessDidLogin:(GizDataAccessLogin *)login uid:(NSString *)uid token:(NSString *)token result:(GizDataAccessErrorCode)result message:(NSString *)message
+- (void)gizDataAccess:(GizDataAccessLogin *)login didLogin:(NSString *)uid token:(NSString *)token result:(GizDataAccessErrorCode)result message:(NSString *)message
 {
     NSLog(@"token:%@", token);
     _token = token;
     
     if(result == kGizDataAccessErrorNone)
     {
+        switch (self.loginType) {
+            case kAutoLoginTypeNormal:
+                _isAnonymousUser = NO;
+                _isThirdUser = NO;
+                break;
+            case kAutoLoginTypeAnonymous:
+                _isAnonymousUser = YES;
+                _isThirdUser = NO;
+                break;
+            case kAutoLoginTypeThirdAccountType:
+                _isAnonymousUser = NO;
+                _isThirdUser = YES;
+                break;
+            default:
+                break;
+        }
+        
         //跳转
         DataManager *dataManagerCtrl = [[DataManager alloc] init];
         [self.navigationController pushViewController:dataManagerCtrl animated:YES];
     }
     else
     {
-        [[[UIAlertView alloc] initWithTitle:@"提示" message:@"登录失败，请检查网络后重试。" delegate:self cancelButtonTitle:@"确定" otherButtonTitles:nil] show];
+        switch (result) {
+            case kGizDataAccessErrorUserNotExists:
+                [[[UIAlertView alloc] initWithTitle:@"提示" message:@"用户不存在" delegate:self cancelButtonTitle:@"重试" otherButtonTitles:@"返回", nil] show];
+                break;
+            case kGizDataAccessErrorConnectionFailed:
+            case kGizDataAccessErrorConnectionTimeout:
+                [[[UIAlertView alloc] initWithTitle:@"提示" message:@"登录失败，请检查网络后重试" delegate:self cancelButtonTitle:@"重试" otherButtonTitles:nil] show];
+                break;
+            default:
+            {
+                //一般情况下发生的概率小些
+                NSString *msg = [NSString stringWithFormat:@"登录失败，发生错误：“%@”", message];
+                [[[UIAlertView alloc] initWithTitle:@"提示" message:msg delegate:self cancelButtonTitle:@"重试" otherButtonTitles:@"返回",nil] show];
+                break;
+            }
+        }
     }
 }
 
 - (void)alertView:(UIAlertView *)alertView didDismissWithButtonIndex:(NSInteger)buttonIndex
 {
-    [self login];
+    switch (buttonIndex) {
+        case 0:
+            [self login];
+            break;
+        case 1:
+            [self.navigationController popViewControllerAnimated:YES];
+            break;
+        default:
+            break;
+    }
 }
 
 @end

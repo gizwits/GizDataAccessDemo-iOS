@@ -183,7 +183,7 @@
     [UIView commitAnimations];
 }
 
-- (void)gizDataAccessDidLoadData:(GizDataAccessSource *)source data:(NSArray *)data result:(GizDataAccessErrorCode)result errorMessage:(NSString *)message
+- (void)gizDataAccess:(GizDataAccessSource *)source didLoadData:(NSArray *)data result:(GizDataAccessErrorCode)result errorMessage:(NSString *)message
 {
     [GIZAppDelegate.hud hide:YES];
     
