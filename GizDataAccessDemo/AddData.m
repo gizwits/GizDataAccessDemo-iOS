@@ -38,6 +38,9 @@
 @property (weak, nonatomic) IBOutlet UITextField *textSecond;
 @property (weak, nonatomic) IBOutlet UITextField *textMillsecond;
 
+//一次发送数据的数量
+@property (weak, nonatomic) IBOutlet UITextField *textCount;
+
 //数据点
 @property (weak, nonatomic) IBOutlet UITextView *textDataPoint;
 
@@ -49,6 +52,16 @@
     [super viewDidLoad];
     self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemDone target:self action:@selector(onSend)];
     self.navigationItem.title = @"添加数据";
+    
+#if QA_ENVIRONMENT
+    //QA1
+    self.textDataPoint.text = @"{\n\
+    \"a1\": true,\n\
+    \"a2\": \"1\",\n\
+    \"a3\": 123,\n\
+    \"a4\": \"test\"\n\
+}";
+#endif
 }
 
 - (void)didReceiveMemoryWarning {
@@ -71,13 +84,38 @@
     NSDate *date = [dateFormatter dateFromString:strDate];
     NSTimeInterval timestamp = [date timeIntervalSince1970];
     
+    if(nil == date)
+    {
+        [[[UIAlertView alloc] initWithTitle:@"提示" message:@"日期或时间错误，请重新输入。" delegate:nil cancelButtonTitle:@"确定" otherButtonTitles:nil] show];
+        return;
+    }
+    
+    if([self.textCount.text integerValue] <= 0)
+    {
+        [[[UIAlertView alloc] initWithTitle:@"提示" message:@"同时发送数据的数量必须大于0。" delegate:nil cancelButtonTitle:@"确定" otherButtonTitles:nil] show];
+        return;
+    }
+    
     if(nil == gdaSource)
         gdaSource = [[GizDataAccessSource alloc] initWithDelegate:self];
     
     GIZAppDelegate.hud.labelText = @"添加中...";
     [GIZAppDelegate.hud show:YES];
     
-    [gdaSource saveData:_token productKey:PRODUCT_KEY deviceSN:PRODUCT_SN timestamp:timestamp*1000 attributes:self.textDataPoint.text];
+    NSData *dataContent = [self.textDataPoint.text dataUsingEncoding:NSUTF8StringEncoding];
+    NSDictionary *dict = [NSJSONSerialization JSONObjectWithData:dataContent options:0 error:nil];
+    if(nil == dict)
+        dict = [NSDictionary dictionary];
+
+    NSMutableArray *mArray = [NSMutableArray array];
+    for(int i=0; i<[self.textCount.text integerValue]; i++)
+    {
+        NSDictionary *tmpDict = @{@"ts": @(timestamp*1000),
+                                  @"attrs": dict};
+        [mArray addObject:tmpDict];
+    }
+    NSArray *data = [NSArray arrayWithArray:mArray];
+    [gdaSource saveData:_token productKey:PRODUCT_KEY deviceSN:PRODUCT_SN data:data];
 }
 
 #pragma mark - delegates

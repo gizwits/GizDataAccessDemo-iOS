@@ -54,7 +54,7 @@
  * @param message 错误信息，成功为 "Success"
  *
  * @see 触发函数：
- * [GizDataAccessLogin registerUser:password:code:]，
+ * [GizDataAccessLogin registerUser:password:code:accountType:]
  *
  */
 - (void)gizDataAccess:(GizDataAccessLogin *)login didRegisterUser:(NSString *)uid token:(NSString *)token result:(GizDataAccessErrorCode)result message:(NSString *)message;
@@ -70,7 +70,7 @@
  * @param message 错误信息，成功为 "Success"
  *
  * @see 触发函数：
- * [GizDataAccessLogin requestSendVerifyCode:]，
+ * [GizDataAccessLogin requestSendVerifyCode:]
  *
  */
 - (void)gizDataAccess:(GizDataAccessLogin *)login didRequestSendVerifyCode:(GizDataAccessErrorCode)result message:(NSString *)message;
@@ -103,10 +103,10 @@
  * @param message 错误信息，成功为 "Success"
  *
  * @see 触发函数：
- * [GizDataAccessLogin changeUser:username:code:]
+ * [GizDataAccessLogin changeUserInfo:username:code:accountType:]
  *
  */
-- (void)gizDataAccess:(GizDataAccessLogin *)login didChangeUser:(GizDataAccessErrorCode)result message:(NSString *)message;
+- (void)gizDataAccess:(GizDataAccessLogin *)login didChangeUserInfo:(GizDataAccessErrorCode)result message:(NSString *)message;
 
 /**
  *
@@ -159,14 +159,15 @@
  *
  * 使用用户名、密码注册普通用户
  *
- * @param username 用户名，可以是手机号、邮箱和其他
- * @param password 密码
- * @param code 如果用户名是手机，则输入验证码
+ * @param username      用户名，可以是手机号、邮箱和其他
+ * @param password      密码
+ * @param code          如果用户名是手机，则输入验证码
+ * @param accountType   账号类型
  *
  * @see 对应的回调接口：[GizDataAccessLoginDelegate gizDataAccess:didRegisterUser:token:result:message:]
  *
  */
-- (void)registerUser:(NSString *)username password:(NSString *)password code:(NSString *)code accountType:(GizDataAccessAccountType)accountType;;
+- (void)registerUser:(NSString *)username password:(NSString *)password code:(NSString *)code accountType:(GizDataAccessAccountType)accountType;
 
 /**
  *
@@ -181,10 +182,9 @@
  *
  * 第三方用户登录。使用已注册好的第三方用户和密码，用第三方 SDK 获取到相应的 uid, token 即可登录
  *
- * @param thi           rdAccountType 第三方账号类型，目前支持新浪、百度
- * @param uid           通过第三方 SDK 得到的用户 id
- * @param token         通过第三方 SDK 得到的用户 token
- * @param accountType   账号类型
+ * @param thirdAccountType  第三方账号类型，目前支持新浪、百度、QQ
+ * @param uid               通过第三方 SDK 得到的用户 id
+ * @param token             通过第三方 SDK 得到的用户 token
  *
  * @see 对应的回调接口：[GizDataAccessLoginDelegate gizDataAccess:didLogin:token:result:message:]
  *
@@ -239,10 +239,10 @@
  * @param code          用户类型是手机时，填写手机验证码
  * @param accountType   账号类型
  *
- * @see 对应的回调接口：[GizDataAccessLoginDelegate gizDataAccess:didChangeUser:message:]
+ * @see 对应的回调接口：[GizDataAccessLoginDelegate gizDataAccess:didChangeUserInfo:message:]
  *
  */
-- (void)changeUser:(NSString *)token username:(NSString *)username code:(NSString *)code accountType:(GizDataAccessAccountType)accountType;
+- (void)changeUserInfo:(NSString *)token username:(NSString *)username code:(NSString *)code accountType:(GizDataAccessAccountType)accountType;
 
 /**
  * 转换匿名用户为实名用户（第三方账号除外）
@@ -253,7 +253,7 @@
  * @param code          用户类型是手机时，填写手机号码
  * @param accountType   账号类型。该接口 kGizDataAccessAccountTypeNormal 包含邮箱的方法，所以 kGizDataAccessAccountTypeEmail 不适用于这个接口
  *
- * @see 对应的回调接口：[GizDataAccessLoginDelegate gizDataAccess:didtransAnonymousUser:message:]
+ * @see 对应的回调接口：[GizDataAccessLoginDelegate gizDataAccess:didTransAnonymousUser:message:]
  *
  */
 - (void)transAnonymousUser:(NSString *)token username:(NSString *)username password:(NSString *)password code:(NSString *)code accountType:(GizDataAccessAccountType)accountType;

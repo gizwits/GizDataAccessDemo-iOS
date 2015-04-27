@@ -55,7 +55,7 @@
  *     @"product_key" : [product_key]
  * ]
  *
- * @see 触发函数：[GizDataAccessSource saveData:productKey:deviceSN:timestamp:attributes:]
+ * @see 触发函数：[GizDataAccessSource saveData:productKey:deviceSN:data:]
  *
  */
 - (void)gizDataAccess:(GizDataAccessSource *)source didLoadData:(NSArray *)data result:(GizDataAccessErrorCode)result errorMessage:(NSString *)message;
@@ -90,16 +90,20 @@
  *
  * @param deviceSN 蓝牙设备序列号
  *
- * @param timestamp 蓝牙设备数据产生的时间（以格林威治标准时间 1970年1月1日00:00:00.000 为准的时间戳）。整数0为 格林威治标准时间，负整数为早于 格林威治标准时间 的时间，正整数为晚于 格林威治标准时间 的时间。
+ * @param data 自定义属性，对应的格式为标准JSON。JSON对象与蓝牙数据点应相一致，如果不一致，则会上传失败。一个JSON对象表示一条数据，如果传入多个JSON对象，则只有第一个JSON对象能够上传成功。
  *
- * @param attrs 自定义属性，对应的格式为标准JSON。JSON对象与蓝牙数据点应相一致，如果不一致，则会上传失败。一个JSON对象表示一条数据，如果传入多个JSON对象，则只有第一个JSON对象能够上传成功。
- *
- * @note attrs示例：{"attr1": "value1"}
+ * @note data示例：@[
+ *   @{@"ts": [timestamp],
+ *         @"attrs": @{
+ *            [dynamic_keys]: [dynamic_values], ...
+ *         }
+ *      }
+ *   ]
  *
  * @see 对应的回调接口：[GizDataAccessSourceDelegate gizDataAccess:didSaveData:message:]
  *
  */
-- (void)saveData:(NSString *)token productKey:(NSString *)productKey deviceSN:(NSString *)deviceSN timestamp:(int64_t)timestamp attributes:(NSString *)attrs;
+- (void)saveData:(NSString *)token productKey:(NSString *)productKey deviceSN:(NSString *)deviceSN data:(NSArray *)data;
 
 /**
  * 从机智云服务器获取蓝牙数据，接口参数为获取数据的条件。如果APP希望获取从 开始时间 之后的所有数据，将 截止时间 设置为晚于 最新数据的产生时间 即可。如果APP希望获取 截止时间 之前的所有数据，将 开始时间 设置为早于 最早数据的产生时间 即可。

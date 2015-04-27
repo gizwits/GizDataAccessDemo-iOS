@@ -41,7 +41,11 @@ NSArray *_datas = nil;
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
     //Init SDK
+#if QA_ENVIRONMENT
+    [GizDataAccess startWithAppID:@"b59a21de49514416abc0f2a19fce1ed7"];//QA1
+#else
     [GizDataAccess startWithAppID:@"fdcbf5f389fd40d99a01828f7f5029de"];
+#endif
 //    [GizDataAccess setDataAccessDomainName:@"apiv4.iotsdk.com"];
     
     self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
