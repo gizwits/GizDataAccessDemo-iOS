@@ -13,80 +13,83 @@
 #define GIZ_ERRORMSG_FAILED         @"Failed"
 
 /**
- GizDataAccessErrorCode枚举，描述了SDK提供的所有错误码定义。
+ * GizDataAccessErrorCode枚举，描述了SDK提供的所有错误码定义。
  */
 typedef NS_ENUM(NSInteger, GizDataAccessErrorCode)
 {
     /**
-     无错误
+     * 无错误
      */
     kGizDataAccessErrorNone                      = 0,
     /**
-     连接失败
+     * 连接失败
      */
     kGizDataAccessErrorConnectionFailed          = 8001,
     /**
-     连接超时
+     * 连接超时
      */
     kGizDataAccessErrorConnectionTimeout         = 8002,
     /**
-     参数错误
+     * 参数错误
      */
     kGizDataAccessErrorInvalidParameters         = 8003,
     /**
-     Product Key 非法
+     * Product Key 非法
      */
     kGizDataAccessErrorInvalidProductKey         = 9002,
     /**
-     App ID 非法
+     * App ID 非法
      */
     kGizDataAccessErrorInvalidAppID              = 9003,
     /**
-     Token 非法
+     * Token 非法
      */
     kGizDataAccessErrorInvalidToken              = 9004,
     /**
-     用户不存在
+     * 用户不存在
      */
     kGizDataAccessErrorUserNotExists             = 9005,
     /**
-     Token 过期
+     * Token 过期
      */
     kGizDataAccessErrorTokenExpired              = 9006,
     /**
-     服务器错误
+     * 服务器错误
      */
     kGizDataAccessErrorServer                    = 9008,
     /**
-     手机验证码过期
+     * 手机验证码过期
      */
     kGizDataAccessErrorCodeExpired               = 9009,
     /**
-     手机验证码错误
+     * 手机验证码错误
      */
     kGizDataAccessErrorCodeInvalid               = 9010,
     /**
-     数据格式错误
+     * 数据格式错误
      */
     kGizDataAccessErrorFormInvalid               = 9015,
     /**
-     手机号不可用
+     * 手机号不可用
      */
     kGizDataAccessErrorPhoneUnavaliable          = 9018,
     /**
-     用户名不可用
+     * 用户名不可用
      */
     kGizDataAccessErrorUsernameUnavaliable       = 9019,
     /**
-     用户名或密码错误
+     * 用户名或密码错误
      */
     kGizDataAccessErrorUsernameOrPasswordError   = 9020,
     /**
-     其他情况
+     * 其他情况
      */
     kGizDataAccessErrorOtherwise                 = 9999
 };
 
+/**
+ GizDataAccessThirdAccountType枚举，描述了SDK提供的所有第三方账号类型的定义。
+ */
 typedef NS_ENUM(NSInteger, GizDataAccessThirdAccountType)
 {
     /**
@@ -103,6 +106,9 @@ typedef NS_ENUM(NSInteger, GizDataAccessThirdAccountType)
     kGizDataAccessThirdAccountTypeQQ
 };
 
+/**
+ * GizDataAccessAccountType枚举，描述了SDK提供的所有支持账号类型的定义。
+ */
 typedef NS_ENUM(NSInteger, GizDataAccessAccountType)
 {
     /**

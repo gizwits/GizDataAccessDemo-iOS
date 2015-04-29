@@ -96,7 +96,7 @@
         default:
             return;
     }
-    [self.gizLogin changeUser:_token username:self.textUser.text code:self.textVerifyCode.text accountType:accountType];
+    [self.gizLogin changeUserInfo:_token username:self.textUser.text code:self.textVerifyCode.text accountType:accountType];
 }
 
 - (IBAction)onQueryVerifyCode:(id)sender {
@@ -142,7 +142,7 @@
     return YES;
 }
 
-- (void)gizDataAccess:(GizDataAccessLogin *)login didChangeUser:(GizDataAccessErrorCode)result message:(NSString *)message
+- (void)gizDataAccess:(GizDataAccessLogin *)login didChangeUserInfo:(GizDataAccessErrorCode)result message:(NSString *)message
 {
     if(result == kGizDataAccessErrorNone)
     {
