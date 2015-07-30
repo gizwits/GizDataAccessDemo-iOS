@@ -28,10 +28,12 @@
 #import "ChangePass.h"
 #import "ChangeUser.h"
 #import "TransAnonymous.h"
+#import "RetrieveAggregatedData.h"
 
-@interface DataManager () <GizDataAccessSourceDelegate, UITableViewDataSource, UITableViewDelegate, LoadDataDelegate, UIActionSheetDelegate>
+@interface DataManager () <GizDataAccessSourceDelegate, UITableViewDataSource, UITableViewDelegate, LoadDataDelegate, RetrieveAggregatedDataDelegate, UIActionSheetDelegate>
 {
     LoadData *loadDataCtrl;
+    RetrieveAggregatedData *retrieveDataCtrl;
 }
 
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
@@ -70,13 +72,14 @@
     }
     
     UIActionSheet *actionSheet = [[UIActionSheet alloc] initWithTitle:@"菜单" delegate:self cancelButtonTitle:@"取消" destructiveButtonTitle:@"添加数据" otherButtonTitles:@"注销", @"修改密码", titlePhone, titleNormal, nil];
+    actionSheet.tag = 0;
     [actionSheet showInView:self.view];
 }
 
 - (void)onLoadData {
-    loadDataCtrl = [[LoadData alloc] initWithDelegate:self];
-//    [self.navigationController pushViewController:loadDataCtrl animated:YES];
-    [loadDataCtrl show];
+    UIActionSheet *actionSheet = [[UIActionSheet alloc] initWithTitle:@"查询条件" delegate:self cancelButtonTitle:@"取消" destructiveButtonTitle:nil otherButtonTitles:@"基本查询条件", @"扩展查询条件", nil];
+    actionSheet.tag = 1;
+    [actionSheet showInView:self.view];
 }
 
 #pragma mark - table view data source
@@ -131,78 +134,104 @@
     }
 }
 
-#pragma mark = Action sheet
-- (void)actionSheet:(UIActionSheet *)actionSheet didDismissWithButtonIndex:(NSInteger)buttonIndex
+- (void)retrieveAggregatedData:(RetrieveAggregatedData *)loadData didLoaded:(NSArray *)data result:(GizDataAccessErrorCode)result
 {
-    switch (buttonIndex) {
-        case 0://添加数据
-        {
-            AddData *addDataCtrl = [[AddData alloc] init];
-            [self.navigationController pushViewController:addDataCtrl animated:YES];
-            return;
-        }
-        case 1://注销
-        {
-            [self.navigationController popToRootViewControllerAnimated:YES];
-            
-            //清除登录信息
-            _token = nil;
-            _datas = nil;
-            break;
-        }
-        case 2://修改密码
-        {
-            if(!_isAnonymousUser && !_isThirdUser) {
-                ChangePassType changeType = kChangePassTypeModify;
-                ChangePass *changePassCtrl = [[ChangePass alloc] initWithType:changeType];
-                [self.navigationController pushViewController:changePassCtrl animated:YES];
-            }
-            else {
-                [[[UIAlertView alloc] initWithTitle:@"提示" message:@"匿名用户或者第三方用户不能通过 SDK 的 API 修改密码" delegate:nil cancelButtonTitle:@"确定" otherButtonTitles:nil] show];
-            }
-            break;
-        }
-        case 3://普通用户修改手机
-        {
-            if(!_isAnonymousUser) {
-                ChangeUserType changeType = kChangeUserTypePhone;
-                ChangeUser *changeUserCtrl = [[ChangeUser alloc] initWithType:changeType];
-                [self.navigationController pushViewController:changeUserCtrl animated:YES];
-            }
-            else {
-                TransAnonymousType TransType = kTransAnonymousTypePhone;
-                TransAnonymous *TransCtrl = [[TransAnonymous alloc] initWithType:TransType];
-                [self.navigationController pushViewController:TransCtrl animated:YES];
-            }
-            break;
-        }
-        case 4://普通用户修改邮箱
-        {
-            if(!_isAnonymousUser) {
-                ChangeUserType changeType = kChangeUserTypeEmail;
-                ChangeUser *changeUserCtrl = [[ChangeUser alloc] initWithType:changeType];
-                [self.navigationController pushViewController:changeUserCtrl animated:YES];
-            }
-            else {
-                TransAnonymousType TransType = kTransAnonymousTypeNormal;
-                TransAnonymous *TransCtrl = [[TransAnonymous alloc] initWithType:TransType];
-                [self.navigationController pushViewController:TransCtrl animated:YES];
-            }
-            break;
-        }
-        default:
-            return;
+    if(result == kGizDataAccessErrorNone)
+    {
+        _datas = data;
+        [self.tableView reloadData];
     }
 }
 
-/*
-#pragma mark - Navigation
-
-// In a storyboard-based application, you will often want to do a little preparation before navigation
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    // Get the new view controller using [segue destinationViewController].
-    // Pass the selected object to the new view controller.
+#pragma mark = Action sheet
+- (void)actionSheet:(UIActionSheet *)actionSheet didDismissWithButtonIndex:(NSInteger)buttonIndex
+{
+    switch (actionSheet.tag) {
+        case 0:
+            switch (buttonIndex) {
+                case 0://添加数据
+                {
+                    AddData *addDataCtrl = [[AddData alloc] init];
+                    [self.navigationController pushViewController:addDataCtrl animated:YES];
+                    return;
+                }
+                case 1://注销
+                {
+                    [self.navigationController popToRootViewControllerAnimated:YES];
+                    
+                    //清除登录信息
+                    _token = nil;
+                    _datas = nil;
+                    break;
+                }
+                case 2://修改密码
+                {
+                    if(!_isAnonymousUser && !_isThirdUser) {
+                        ChangePassType changeType = kChangePassTypeModify;
+                        ChangePass *changePassCtrl = [[ChangePass alloc] initWithType:changeType];
+                        [self.navigationController pushViewController:changePassCtrl animated:YES];
+                    }
+                    else {
+                        [[[UIAlertView alloc] initWithTitle:@"提示" message:@"匿名用户或者第三方用户不能通过 SDK 的 API 修改密码" delegate:nil cancelButtonTitle:@"确定" otherButtonTitles:nil] show];
+                    }
+                    break;
+                }
+                case 3://普通用户修改手机
+                {
+                    if(!_isAnonymousUser) {
+                        ChangeUserType changeType = kChangeUserTypePhone;
+                        ChangeUser *changeUserCtrl = [[ChangeUser alloc] initWithType:changeType];
+                        [self.navigationController pushViewController:changeUserCtrl animated:YES];
+                    }
+                    else {
+                        TransAnonymousType TransType = kTransAnonymousTypePhone;
+                        TransAnonymous *TransCtrl = [[TransAnonymous alloc] initWithType:TransType];
+                        [self.navigationController pushViewController:TransCtrl animated:YES];
+                    }
+                    break;
+                }
+                case 4://普通用户修改邮箱
+                {
+                    if(!_isAnonymousUser) {
+                        ChangeUserType changeType = kChangeUserTypeEmail;
+                        ChangeUser *changeUserCtrl = [[ChangeUser alloc] initWithType:changeType];
+                        [self.navigationController pushViewController:changeUserCtrl animated:YES];
+                    }
+                    else {
+                        TransAnonymousType TransType = kTransAnonymousTypeNormal;
+                        TransAnonymous *TransCtrl = [[TransAnonymous alloc] initWithType:TransType];
+                        [self.navigationController pushViewController:TransCtrl animated:YES];
+                    }
+                    break;
+                }
+                default:
+                    return;
+            }
+            break;
+        case 1:
+            switch (buttonIndex) {
+                case 0:
+                {
+                    //普通查询条件
+                    loadDataCtrl = [[LoadData alloc] initWithDelegate:self];
+                    [loadDataCtrl show];
+                    break;;
+                }
+                case 1:
+                {
+                    //扩展查询条件
+                    retrieveDataCtrl = [[RetrieveAggregatedData alloc] initWithDelegate:self];
+                    [retrieveDataCtrl show];
+                    break;
+                }
+                default:
+                    return;
+            }
+            break;
+            
+        default:
+            break;
+    }
 }
-*/
 
 @end

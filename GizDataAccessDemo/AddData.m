@@ -114,6 +114,7 @@
                                   @"attrs": dict};
         [mArray addObject:tmpDict];
     }
+//    NSArray *data = @[@{@"attrs":@{@"device_mac":@"1C:48:F9:54:6E:D6",@"device_name":@"Jabra BOOST WeChat v0.17.9"},@"ts":@1434600799692}];
     NSArray *data = [NSArray arrayWithArray:mArray];
     [gdaSource saveData:_token productKey:PRODUCT_KEY deviceSN:PRODUCT_SN data:data];
 }

@@ -53,6 +53,8 @@
 @property (weak, nonatomic) IBOutlet UITextField *textLimit;
 @property (weak, nonatomic) IBOutlet UITextField *textSkip;
 
+@property (weak, nonatomic) IBOutlet UITextField *textAttrs;
+
 @end
 
 @implementation LoadData
@@ -132,7 +134,9 @@
     GIZAppDelegate.hud.labelText = @"加载数据中，请等待...";
     [GIZAppDelegate.hud show:YES];
     
-    [gdaSource loadData:_token productKey:PRODUCT_KEY deviceSN:PRODUCT_SN startTime:timeStart*1000 endTime:timeEnd*1000 limit:[self.textLimit.text integerValue] skip:[self.textSkip.text integerValue]];
+    NSArray *attrs = [self.textAttrs.text componentsSeparatedByString:@","];
+    
+    [gdaSource loadData:_token productKey:PRODUCT_KEY deviceSN:PRODUCT_SN startTime:timeStart*1000 endTime:timeEnd*1000 specifyAttrs:attrs limit:[self.textLimit.text integerValue] skip:[self.textSkip.text integerValue]];
 }
 
 - (IBAction)onTap:(id)sender {
@@ -158,14 +162,20 @@
     if(textField == self.textLimit)
     {
         CGRect frame = self.view.frame;
-        frame.origin.y = -80;
+        frame.origin.y = -70;
         self.view.frame = frame;
     }
     
     if(textField == self.textSkip)
     {
         CGRect frame = self.view.frame;
-        frame.origin.y = -130;
+        frame.origin.y = -120;
+        self.view.frame = frame;
+    }
+    if(textField == self.textAttrs)
+    {
+        CGRect frame = self.view.frame;
+        frame.origin.y = -180;
         self.view.frame = frame;
     }
     [UIView commitAnimations];
@@ -181,6 +191,15 @@
     self.view.frame = frame;
     
     [UIView commitAnimations];
+}
+
+- (BOOL)textFieldShouldReturn:(UITextField *)textField
+{
+    if(textField == self.textAttrs)
+    {
+        [self onTap:nil];
+    }
+    return YES;
 }
 
 - (void)gizDataAccess:(GizDataAccessSource *)source didLoadData:(NSArray *)data result:(GizDataAccessErrorCode)result errorMessage:(NSString *)message

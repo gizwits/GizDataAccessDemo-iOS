@@ -60,6 +60,23 @@
  */
 - (void)gizDataAccess:(GizDataAccessSource *)source didLoadData:(NSArray *)data result:(GizDataAccessErrorCode)result errorMessage:(NSString *)message;
 
+/**
+ *
+ * 从服务器取回的数据回调
+ *
+ * @param source 当前GizDataAccessSource实例
+ *
+ * @param data 获取到的数据。如果获取失败则为nil
+ *
+ * @param byQueryRequest 做什么用的??????
+ *
+ * @param result 数据获取结果，成功或失败。详情参考 GizDataAccessErrorCode 定义
+ *
+ * @param message 数据获取结果描述，成功为 "Success"
+ *
+ */
+- (void)gizDataAccess:(GizDataAccessSource *)source didRetrieveAggregatedData:(NSArray *)data byQueryRequest:(NSDictionary *)queryRequest result:(GizDataAccessErrorCode)result errorMessage:(NSString *)message;
+
 @end
 
 /**
@@ -82,7 +99,7 @@
 
 /**
  * 上传蓝牙数据到机智云服务器。
- * 此接口只支持成功上传一条数据，如果APP有多条数据需要上传，应通过多次接口调用完成。
+ * 此接口支持多条数据需要上传。
  *
  * @param token 用户登录回调给的对应字符串
  *
@@ -90,7 +107,7 @@
  *
  * @param deviceSN 蓝牙设备序列号
  *
- * @param data 自定义属性，对应的格式为标准JSON。JSON对象与蓝牙数据点应相一致，如果不一致，则会上传失败。一个JSON对象表示一条数据，如果传入多个JSON对象，则只有第一个JSON对象能够上传成功。
+ * @param data 自定义属性，对应的格式为标准JSON。JSON对象与蓝牙数据点应相一致，如果不一致，则会上传失败。一个JSON对象表示一条数据，如果传入多个JSON对象，多条数据都会上传。
  *
  * @note data示例：@[
  *   @{@"ts": [timestamp],
@@ -116,7 +133,9 @@
  *
  * @param startTime 开始时间（以格林威治标准时间 1970年1月1日00:00:00.000 为准的时间戳）。整数0为 格林威治标准时间，正整数为晚于 格林威治标准时间 的时间，负整数为早于 格林威治标准时间 的时间。
  *
- * @param endTime 截止时间（以格林威治标准时间 1970年1月1日00:00:00.000 为准的时间戳）。整数0为 格林威治标准时间，正整数为晚于 格林威治标准时间 的时间，负整数为早于 格林威治标准时间 的时间。
+ * @param endTime 截止时间（以格林威治标准时间 1970年1月1日00:00:00.000 为准的时间戳）。整数0为 格林威治标准时间，正整数为晚于 格林威治标准时间 的时间，负整数为早于 格林威治标准时间 的时间
+ *
+ * @param attrs 根据数据点的标识符，过滤数据的内容
  *
  * @param limit 限制最大获取条数，应指定为大于等于0的数。如果指定为0，则最多返回20条数据，如果指定负数，则获取失败。
  *
@@ -125,6 +144,28 @@
  * @see 对应的回调接口：[GizDataAccessSourceDelegate gizDataAccess:didLoadData:result:errorMessage:]
  *
  */
-- (void)loadData:(NSString *)token productKey:(NSString *)productKey deviceSN:(NSString *)deviceSN startTime:(int64_t)startTime endTime:(int64_t)endTime limit:(NSInteger)limit skip:(NSInteger)skip;
+- (void)loadData:(NSString *)token productKey:(NSString *)productKey deviceSN:(NSString *)deviceSN startTime:(int64_t)startTime endTime:(int64_t)endTime specifyAttrs:(NSArray *)attrs limit:(NSInteger)limit skip:(NSInteger)skip;
+
+/**
+ * 从机智云服务器取回聚合器中的数据
+ *
+ * @param token 用户登录回调给的对应字符串
+ &
+ & @param productKey 蓝牙设备类型唯一识别码
+ *
+ * @param deviceSN 蓝牙设备序列号
+ *
+ * @param startTime 开始时间（以格林威治标准时间 1970年1月1日00:00:00.000 为准的时间戳）。整数0为 格林威治标准时间，正整数为晚于 格林威治标准时间 的时间，负整数为早于 格林威治标准时间 的时间。
+ *
+ * @param endTime 截止时间（以格林威治标准时间 1970年1月1日00:00:00.000 为准的时间戳）。整数0为 格林威治标准时间，正整数为晚于 格林威治标准时间 的时间，负整数为早于 格林威治标准时间 的时间。
+ *
+ * @param attrs 根据数据点的标识符，过滤数据的内容
+ *
+ * @param aggregatorType 聚合器类型，想要服务器起计算时，使用什么算法，返回的结果就是按照对应的算法计算出来的。详细参考GizDataAccessAggregatorType 定义
+ *
+ * @param dateTimeUnit 服务器返回的日期格式，详细参考 GizDataAccessDateTimeUnit 定义。
+ *
+*/
+- (void)retrieveAggregatedData:(NSString *)token productKey:(NSString *)productKey deviceSN:(NSString *)deviceSN startTime:(int64_t)startTime endTime:(int64_t)endTime specifyAttrs:(NSArray *) attrs withAggregatorType:(GizDataAccessAggregatorType)aggregatorType byDateTimeUnit:(GizDataAccessDateTimeUnit)dateTimeUnit;
 
 @end
