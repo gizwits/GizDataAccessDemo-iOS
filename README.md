@@ -3,7 +3,7 @@ GizDataAccessSDK Demo - iOS
 
 Gizwits Data Access iOS Demo App
 
-	这是一款使用GizDataAccessSDK的开源代码示例APP，可以帮助开发者快速把蓝牙设备数据接入到机智云。
+	这是一款使用GizDataAccessSDK的BT/BLE设备接入机智云的iOS版本开源代码示例源码。包含蓝牙设备数据上传云端，云端下载同步数据等功能的参考实现，开发者可通过此开源程序学习物联网硬件相关的App实现方法。
 
 
 功能介绍
@@ -28,5 +28,5 @@ Gizwits Data Access iOS Demo App
 问题反馈
 
     您可以给机智云的技术支持人员发送邮件，反馈您在使用过程中遇到的任何问题。
-    邮箱：janel@gizwits.com
+    邮箱：clue@gizwits.com
 
