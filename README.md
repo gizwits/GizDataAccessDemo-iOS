@@ -3,7 +3,9 @@ GizDataAccessSDK Demo - iOS
 
 Gizwits Data Access iOS Demo App
 
-	这是一款使用GizDataAccessSDK的BT/BLE设备接入机智云的iOS版本开源代码示例源码。包含蓝牙设备数据上传云端，云端下载同步数据等功能的参考实现，开发者可通过此开源程序学习物联网硬件相关的App实现方法。
+	这是一款使用GizDataAccessSDK的BT/BLE设备接入机智云的iOS版本开源代码示例源码。
+	
+	包含蓝牙设备数据上传云端，云端下载同步数据等功能的参考实现，开发者可通过此开源程序学习物联网硬件相关的App实现方法。
 
 
 功能介绍
