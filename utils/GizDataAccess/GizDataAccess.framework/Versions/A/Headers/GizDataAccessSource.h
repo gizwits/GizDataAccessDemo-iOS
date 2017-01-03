@@ -133,6 +133,28 @@
  *
  * @param startTime 开始时间（以格林威治标准时间 1970年1月1日00:00:00.000 为准的时间戳）。整数0为 格林威治标准时间，正整数为晚于 格林威治标准时间 的时间，负整数为早于 格林威治标准时间 的时间。
  *
+ * @param endTime 截止时间（以格林威治标准时间 1970年1月1日00:00:00.000 为准的时间戳）。整数0为 格林威治标准时间，正整数为晚于 格林威治标准时间 的时间，负整数为早于 格林威治标准时间 的时间。
+ *
+ * @param limit 限制最大获取条数，应指定为大于等于0的数。如果指定为0，则最多返回20条数据，如果指定负数，则获取失败。
+ *
+ * @param skip 从头开始跳过几条数据，应指定为大于等于0的数。如果指定负数，则获取失败。
+ *
+ * @see 对应的回调接口：[GizDataAccessSourceDelegate gizDataAccess:didLoadData:result:errorMessage:]
+ *
+ */
+- (void)loadData:(NSString *)token productKey:(NSString *)productKey deviceSN:(NSString *)deviceSN startTime:(int64_t)startTime endTime:(int64_t)endTime limit:(NSInteger)limit skip:(NSInteger)skip DEPRECATED_ATTRIBUTE;
+
+/**
+ * 从机智云服务器获取蓝牙数据，接口参数为获取数据的条件。如果APP希望获取从 开始时间 之后的所有数据，将 截止时间 设置为晚于 最新数据的产生时间 即可。如果APP希望获取 截止时间 之前的所有数据，将 开始时间 设置为早于 最早数据的产生时间 即可。
+ *
+ * @param token 用户登录回调给的对应字符串
+ *
+ * @param productKey 蓝牙设备类型唯一识别码
+ *
+ * @param deviceSN 蓝牙设备序列号
+ *
+ * @param startTime 开始时间（以格林威治标准时间 1970年1月1日00:00:00.000 为准的时间戳）。整数0为 格林威治标准时间，正整数为晚于 格林威治标准时间 的时间，负整数为早于 格林威治标准时间 的时间。
+ *
  * @param endTime 截止时间（以格林威治标准时间 1970年1月1日00:00:00.000 为准的时间戳）。整数0为 格林威治标准时间，正整数为晚于 格林威治标准时间 的时间，负整数为早于 格林威治标准时间 的时间
  *
  * @param attrs 根据数据点的标识符，过滤数据的内容
