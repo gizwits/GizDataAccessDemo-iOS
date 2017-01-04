@@ -93,7 +93,7 @@
     if(nil == self.pickerSelection)
     {
         //初始化
-        CGRect frame = CGRectMake(0, self.view.frame.size.height-216, self.view.frame.size.width, 0);
+        CGRect frame = CGRectMake(0, self.view.frame.size.height-216, self.view.frame.size.width, 216);
         self.pickerSelection = [[UIPickerView alloc] initWithFrame:frame];
         self.pickerSelection.hidden = YES;
         self.pickerSelection.delegate = self;

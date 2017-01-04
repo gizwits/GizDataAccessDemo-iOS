@@ -44,8 +44,8 @@ NSArray *_datas = nil;
 #if QA_ENVIRONMENT
     [GizDataAccess startWithAppID:@"b59a21de49514416abc0f2a19fce1ed7"];//QA1
 #else
-    [GizDataAccess startWithAppID:@"ef74585e5d444d189a243cee58efde22"];//APIV4
-//    [GizDataAccess startWithAppID:@"4e692edb2ce548cab694e99bf935ca89"];
+//    [GizDataAccess startWithAppID:@"ef74585e5d444d189a243cee58efde22"];//APIV4
+    [GizDataAccess startWithAppID:@"0077ca3331d84efb9a51613da1e43c6f"];
 #endif
 //    [GizDataAccess setDataAccessDomainName:@"apiv4.iotsdk.com"];
     
