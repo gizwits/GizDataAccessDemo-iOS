@@ -38,7 +38,8 @@
 #if QA_ENVIRONMENT
 #define PRODUCT_KEY @"327a82a9822d4a5e92a19c412b44e7a0"//QA1
 #else
-#define PRODUCT_KEY @"fa772600fc73479ab0b35af373dde5d6"
+//#define PRODUCT_KEY @"d7ea884ad03247048297c342dfb9bfe7"//apiv4
+#define PRODUCT_KEY @"your_product_key"
 #endif
 
 //这些，是临时的数据存储

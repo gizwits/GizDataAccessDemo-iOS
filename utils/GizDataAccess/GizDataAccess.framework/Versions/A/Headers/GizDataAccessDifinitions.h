@@ -125,4 +125,50 @@ typedef NS_ENUM(NSInteger, GizDataAccessAccountType)
     kGizDataAccessAccountTypeEmail
 };
 
+/**
+ * GizDataAccessAggregatorType枚举，描述了SDK提供查询的聚合器定义
+ */
+typedef NS_ENUM(NSUInteger, GizDataAccessAggregatorType)
+{
+    /**
+     * 求和
+     */
+    kGizDataAccessAggregatorTypeSum = 0,
+    /**
+     * 平均值
+     */
+    kGizDataAccessAggregatorTypeAvg = 1,
+    /**
+     * 最大值
+     */
+    kGizDataAccessAggregatorTypeMax = 2,
+    /**
+     * 最小值
+     */
+    kGizDataAccessAggregatorTypeMin = 3
+};
+
+/**
+ * GizDataAccessDateTimeUnit枚举，描述了SDK提供事件信息精确性的定义
+ */
+typedef NS_ENUM(NSUInteger, GizDataAccessDateTimeUnit)
+{
+    /**
+     * 精确到一小时
+     */
+    kGizDataAccessDateTimeUnitHours = 0,
+    /**
+     * 精确到一天
+     */
+    kGizDataAccessDateTimeUnitDays = 1,
+    /**
+     * 精确到一周
+     */
+    kGizDataAccessDateTimeUnitWeeks = 2,
+    /**
+     * 精确到一个月
+     */
+    kGizDataAccessDateTimeUnitMonths = 3
+};
+
 #endif
